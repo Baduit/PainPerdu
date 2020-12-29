@@ -1,0 +1,1 @@
+addTest(first first_test.cpp)
