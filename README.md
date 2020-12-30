@@ -79,7 +79,6 @@ In this table :
 | ------------------- | ---------------------------------------------
 | \_\_start__         | beginning of the machine (if the step is here, the next instruction executed will be 1st instruction of the recipe)
 | \_\_exit__          | end of the machine (if the step is here, the machine stop)
-| \_\_last_modified__ | last case modified by the machine
 
 ## Example
 
