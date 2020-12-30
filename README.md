@@ -45,21 +45,23 @@ In this table :
 * __n__ represents a positive integer
 * __id__ represents an identifier
 
-| Symbols       | action 
-| ------------- | -------------
-| >n            | move the cursor of n cases to the right
-| <n            | move the cursor of n cases to the left
-| +n            | increment the value pointed by the cursor of n
-| -n            | decrement the value pointed by the cursor of n
-| #id           | define of a reference id to the current location of the cursor, it can override an existing reference
-| @id           | move the cursor to the reference id
-| :id           | define a label id at the current step, it can override an existing label
-| *id           | move the step to the label id
-| ?            | the next instruction is executed only if the case at the cursor is not equal to 0
-| ?n            | the next instruction is executed only if the case at the cursor by is equal to n
-| !id           | the next instruction is executed if the cursor is not at the reference id
-| [             | read 1 byte from the standard input and set the case at the cursor to the read value
-| ]             | write the case at the cursor in the standard output
+| Symbols        | action 
+| -------------- | -------------
+| >n             | move the cursor of n cases to the right
+| <n             | move the cursor of n cases to the left
+| +n             | increment the value pointed by the cursor of n
+| -n             | decrement the value pointed by the cursor of n
+| #id            | define of a reference id to the current location of the cursor, it can override an existing reference
+| @id            | move the cursor to the reference id
+| :id            | define a label id at the step, it can override an existing label
+| *id            | move the step to the label id
+| ?              | the next instruction is executed only if the case at the cursor is not equal to 0
+| ?n             | the next instruction is executed only if the case at the cursor by is equal to n
+| !id            | the next instruction is executed if the cursor is not at the reference id
+| [              | read 1 byte from the standard input and set the case at the cursor to the read value
+| ]              | write the case at the cursor in the standard output
+| $id            | the next instruction is executed if the reference id exists
+| .id            | the next instruction is executed if the label id exists
 
 ### System references
 | identifier          | description
