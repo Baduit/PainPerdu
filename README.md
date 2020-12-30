@@ -4,9 +4,13 @@ This is a stack based esoteric langage I create for fun.
 
 This repository contains the specification (in this readme) and the official implementation.
 
+The default extension for the source file is "__.pain__".
+
 ## Specification
 ### General
-The __stack__ is the memory of the program, it grows automatically. The maximum size is implementation defined.
+The __machine__ is the program interpreting/executing/compiling the _PainPerdu_ code.
+
+The __stack__ is the memory of the machine, it grows automatically. The maximum size is implementation defined.
 > Official implementation will use the maximum size of an std::vector
 
 The stack is made of __cases__, the size of a cases is an unsigned integer value. Overflow of the value reset the value to 0 and underflow set the value to 255.
@@ -15,30 +19,30 @@ The __cursor__ is the pointer in the stack.
 
 An __instruction__ is an action to perform.
 
-The __recipe__ is the list of instruction of the program.
+The __recipe__ is the list of instruction of the machine.
 
-The __step__ represents the actual position of the program in the recipe.
+The __step__ represents the actual position of the machine in the recipe.
 
-The program execute the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step. Example:
-- program starts with the step à the beginning of the recipe
-- program executes 1st instruction
-- program advances the step
-- program executes 2nd instruction
-- program advances the step
-- program executes 3rd instruction that changes the position of the step to 5th instruction
-- program advances the step (even if we jumped to the 5th instruction, the 5th instruction os not executed because the program will advances the step just after each instruction)
-- program executes 6th instruction
-- program exits because the recipe is over
+The machine execute the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step. Example:
+- machine starts with the step à the beginning of the recipe
+- machine executes 1st instruction
+- machine advances the step
+- machine executes 2nd instruction
+- machine advances the step
+- machine executes 3rd instruction that changes the position of the step to 5th instruction
+- machine advances the step (even if we jumped to the 5th instruction, the 5th instruction os not executed because the machine will advances the step just after each instruction)
+- machine executes 6th instruction
+- machine exits because the recipe is over
 
 An __indentifier__ is a list of alphanumeric or underscore characters representing the name of a label or a reference. Identifiers beginning with 2 underscores are reserved. 
 
-a __label__ is a reference to a position in the recipe.
+A __label__ is a reference to a position in the recipe.
 
-a __reference__ is a location to a case.
+A __reference__ is a location to a case.
 
 > The same identifier can be used for a reference and a label
 
-When the program ends it will return the value of the last modified case.
+When the machine ends it will return the value of the last modified case.
 
 ### Instructions
 In this table :
@@ -66,16 +70,18 @@ In this table :
 ### System references
 | identifier          | description
 | ------------------- | ---------------------------------------------
-| \_\_begin__         | 1st case of the program
-| \_\_end__           | last case already accessed by the program
-| \_\_last_modified__ | last case modified by the program
+| \_\_begin__         | 1st case of the machine
+| \_\_end__           | last case already accessed by the machine
+| \_\_last_modified__ | last case modified by the machine
 
 ### System labels
 | identifier          | description
 | ------------------- | ---------------------------------------------
-| \_\_start__         | beginning of the program (if the step is here, the next instruction executed will be 1st instruction of the recipe)
-| \_\_exit__          | end of the program (if the step is here, the program stop)
-| \_\_last_modified__ | last case modified by the program
+| \_\_start__         | beginning of the machine (if the step is here, the next instruction executed will be 1st instruction of the recipe)
+| \_\_exit__          | end of the machine (if the step is here, the machine stop)
+| \_\_last_modified__ | last case modified by the machine
+
+## Example
 
 ## Try it online
 
