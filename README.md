@@ -75,10 +75,6 @@ In this table :
 | \_\_exit__          | end of the program (if the step is here, the program stop)
 | \_\_last_modified__ | last case modified by the program
 
-### Http extention (optional)
-#### Instructions
-#### Http references
-
 ## Try it online
 
 ## Interpreter
