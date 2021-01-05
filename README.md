@@ -38,6 +38,9 @@ A __reference__ is a location to a case, it can be created with an instruction.
 When the machine ends it will return the value of the last modified case.
 
 ### Annotations
+In this table :
+* __id__ represents an identifier
+
 | Symbols        | action 
 | -------------- | -------------
 | :id            | define a label id pointed to the step next step, it can not override an existing label, if there is not instruction after the annotion, it points to the end of the program and moving the step to this label cause the end of the program
