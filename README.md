@@ -19,30 +19,29 @@ The __cursor__ is the pointer in the stack.
 
 An __instruction__ is an action to perform.
 
+An __annotation__ is an information about the code, annotations are evaluated before 1st instruction is executed.
+
 The __recipe__ is the list of instruction of the machine.
 
 The __step__ represents the actual position of the machine in the recipe.
 
-The machine execute the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step. Example:
-- machine starts with the step à the beginning of the recipe
-- machine executes 1st instruction
-- machine advances the step
-- machine executes 2nd instruction
-- machine advances the step
-- machine executes 3rd instruction that changes the position of the step to 5th instruction
-- machine advances the step (even if we jumped to the 5th instruction, the 5th instruction os not executed because the machine will advances the step just after each instruction)
-- machine executes 6th instruction
-- machine exits because the recipe is over
+The machine execute the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step.
 
 An __indentifier__ is a list of alphanumeric or underscore characters representing the name of a label or a reference. Identifiers beginning with 2 underscores are reserved. 
 
-A __label__ is a reference to a position in the recipe.
+A __label__ is a reference to a position in the recipe, it can be created an annotation.
 
-A __reference__ is a location to a case.
+A __reference__ is a location to a case, it can be created with an instruction.
 
 > The same identifier can be used for a reference and a label
 
 When the machine ends it will return the value of the last modified case.
+
+### Annotations
+| Symbols        | action 
+| -------------- | -------------
+| :id            | define a label id pointed to the step next step, it can not override an existing label, if there is not instruction after the annotion, it points to the end of the program and moving the step to this label cause the end of the program
+
 
 ### Instructions
 In this table :
@@ -57,8 +56,7 @@ In this table :
 | -n             | decrement the value pointed by the cursor of n
 | #id            | define of a reference id to the current location of the cursor, it can override an existing reference
 | @id            | move the cursor to the reference id
-| :id            | define a label id at the step, it can override an existing label
-| *id            | move the step to the label id
+| *id            | move the step to the label id, the next instruction executed will be the instruction pointed by the label
 | ?              | the next instruction is executed only if the case at the cursor is not equal to 0
 | ?n             | the next instruction is executed only if the case at the cursor by is equal to n
 | !id            | the next instruction is executed if the cursor is not at the reference id
