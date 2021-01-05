@@ -4,34 +4,45 @@ on: [push]
 
 jobs:
   build_linux:
-    name: build linux
+    name: Build Linux
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
-    - name: install gcc 10
-      run:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Install gcc 10
+      run: |
          sudo apt update
          sudo apt install gcc-10 g++-10
-    - name: build project
+
+    - name: Build project
       env:
         CC: gcc-10
         CXX: g++-10
-      run:
+      run: |
         cmake .
         cmake --build .
-    - name: run tests
+
+    - name: Run tests
       run: ctest
 
   build_windows:
-    name: build windows
+    name: Build Windows
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v2
-    - name: build
-      run:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Build
+      run: |
         cmake .
         cmake --build .
-    - name: run tests
+
+    - name: Run tests
       run: ctest
