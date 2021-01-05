@@ -7,7 +7,7 @@ function(addTest test_name test_files)
 						PRIVATE
 						$<$<CXX_COMPILER_ID:MSVC>:/W3 /permissive- /TP>
 						$<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -g>)
-	target_link_libraries(${test_target} PRIVATE my_lib)                       
+	target_link_libraries(${test_target} PRIVATE PainPerdu)                       
 	target_include_directories(${test_target} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 	add_test(${test_name} ${test_target})
 endfunction()

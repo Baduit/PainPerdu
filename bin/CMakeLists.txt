@@ -1,1 +1,1 @@
-add_subdirectory(first_exe)
+add_subdirectory(interpreter)
