@@ -2,8 +2,14 @@
 
 #include <PainPerdu/PainPerdu.hpp>
 
-int main()
+int main(int argc, char** argv)
 {
-	auto i = PainPerdu::add(9, 4);
-	std::cout << "The result is: " << i << std::endl;
+	if (argc < 2)
+	{
+		std::cout << "interactive mode not implemented\n";
+	}
+	else
+	{
+		std::cout << "interpreter mode not implemented\n";
+	}
 }

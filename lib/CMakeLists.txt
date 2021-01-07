@@ -1,4 +1,6 @@
-set(SRCS ./PainPerdu/PainPerdu.cpp)
+set(SRCS
+    ./PainPerdu/PainPerdu.cpp
+    ./PainPerdu/parser/Parser.cpp)
 
 add_subdirectory(external/crepuscule/lib)
 
