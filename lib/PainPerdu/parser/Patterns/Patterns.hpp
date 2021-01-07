@@ -3,6 +3,7 @@
 #include <external/brigand/brigand.hpp>
 
 #include <PainPerdu/parser/ParsingState.hpp>
+#include <PainPerdu/parser/Patterns/PatternMatchHelper.hpp>
 
 namespace PainPerdu
 {

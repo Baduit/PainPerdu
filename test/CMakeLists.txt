@@ -1,2 +1,2 @@
 include_directories(.)
-add_subdirectory(first)
+add_subdirectory(pattern_matcher)

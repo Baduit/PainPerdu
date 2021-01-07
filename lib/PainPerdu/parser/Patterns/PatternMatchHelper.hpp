@@ -19,6 +19,14 @@ struct AnyWord
 	}
 };
 
+struct AnyInteger
+{
+	bool operator==(const crepuscule::Token& token)
+	{
+		return std::holds_alternative<crepuscule::Integer>(token);
+	}
+};
+
 struct Operator
 {
 	Operator(std::string v):
@@ -49,11 +57,35 @@ struct Keyword
 	std::string value;
 };
 
-template <typename... Args>
-bool match(Args&&... args)
+template <typename It, typename... Args>
+bool match_impl(It)
 {
+	return true;
+}
 
-	return false;
+template <typename It, typename T, typename... Args>
+bool match_impl(It it, T&& t, Args&&... args)
+{
+	if (*it == t)
+	{
+		return match_impl(it + 1, args...);
+	}
+	else
+	{
+		return false;
+	}
+}
+
+template <typename It, typename... Args>
+bool match(It begin, It end, Args&&... args)
+{
+	static_assert(sizeof...(args) != 0);
+	if (begin == end)
+		return false;
+	else if (static_cast<std::size_t>(end - begin) < sizeof...(args))
+		return false;
+	else
+		return match_impl(begin, args...);
 }
 
 }
