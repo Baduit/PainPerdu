@@ -57,6 +57,9 @@ struct Keyword
 	std::string value;
 };
 
+namespace Impl
+{
+
 template <typename It, typename... Args>
 bool match_impl(It)
 {
@@ -76,6 +79,8 @@ bool match_impl(It it, T&& t, Args&&... args)
 	}
 }
 
+} // namespace Impl
+
 template <typename It, typename... Args>
 bool match(It begin, It end, Args&&... args)
 {
@@ -85,7 +90,7 @@ bool match(It begin, It end, Args&&... args)
 	else if (static_cast<std::size_t>(end - begin) < sizeof...(args))
 		return false;
 	else
-		return match_impl(begin, args...);
+		return Impl::match_impl(begin, args...);
 }
 
 } // namespace patterns
