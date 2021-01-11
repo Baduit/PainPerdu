@@ -8,7 +8,7 @@
 
 using namespace boost::ut;
 
-using namespace PainPerdu::parser::patterns;
+using namespace PainPerdu::parser::patterns::helper;
 
 void basic_success()
 {

@@ -18,9 +18,9 @@ namespace patterns
 struct MoveRight
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator(">"), AnyInteger{});
 	}
 
 	template <typename It>
@@ -33,9 +33,9 @@ struct MoveRight
 struct MoveLeft
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("<"), AnyInteger{});
 	}
 
 	template <typename It>
@@ -48,9 +48,9 @@ struct MoveLeft
 struct Increment
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("+"), AnyInteger{});
 	}
 
 	template <typename It>
@@ -63,9 +63,9 @@ struct Increment
 struct Decrement
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("-"), AnyInteger{});
 	}
 
 	template <typename It>
@@ -78,9 +78,9 @@ struct Decrement
 struct DefineReference
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("#"), AnyWord{});
 	}
 
 	template <typename It>
@@ -93,9 +93,9 @@ struct DefineReference
 struct MoveToReference
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("@"), AnyWord{});
 	}
 
 	template <typename It>
@@ -108,9 +108,9 @@ struct MoveToReference
 struct DefineLabel
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator(":"), AnyWord{});
 	}
 
 	template <typename It>
@@ -123,24 +123,9 @@ struct DefineLabel
 struct GoToLabel
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
-	}
-
-	template <typename It>
-	static It action(It, It end, ParsingState&)
-	{
-		return end;
-	}
-};
-
-struct IfCurrentValueEquals0
-{
-	template <typename It>
-	static bool match(It, It, const ParsingState&)
-	{
-		return false;
+		return helper::match(begin, end, Operator("*"), AnyWord{});
 	}
 
 	template <typename It>
@@ -153,9 +138,24 @@ struct IfCurrentValueEquals0
 struct IfCurrentValueEqualsN
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("?"), AnyInteger{});
+	}
+
+	template <typename It>
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
+};
+
+struct IfCurrentValueEquals0
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("?"));
 	}
 
 	template <typename It>
@@ -168,9 +168,9 @@ struct IfCurrentValueEqualsN
 struct IfCursorIsAtReference
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("!"), AnyWord{});
 	}
 
 	template <typename It>
@@ -183,9 +183,9 @@ struct IfCursorIsAtReference
 struct IfReferenceExists
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("$"), AnyWord{});
 	}
 
 	template <typename It>
@@ -198,9 +198,9 @@ struct IfReferenceExists
 struct IfLabelExists
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("."), AnyWord{});
 	}
 
 	template <typename It>
@@ -213,9 +213,9 @@ struct IfLabelExists
 struct GetChar
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("["));
 	}
 
 	template <typename It>
@@ -228,9 +228,9 @@ struct GetChar
 struct PutChar
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&)
+	static bool match(It begin, It end, const ParsingState&)
 	{
-		return false;
+		return helper::match(begin, end, Operator("]"));
 	}
 
 	template <typename It>
@@ -253,8 +253,8 @@ using Patterns =
 			patterns::MoveToReference,
 			patterns::DefineLabel,
 			patterns::GoToLabel,
+			patterns::IfCurrentValueEqualsN, // this one must absoluterly be before "IfCurrentValueEquals0"
 			patterns::IfCurrentValueEquals0,
-			patterns::IfCurrentValueEqualsN,
 			patterns::IfCursorIsAtReference,
 			patterns::IfReferenceExists,
 			patterns::IfLabelExists,
