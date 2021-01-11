@@ -4,7 +4,7 @@
 
 #include <boost_ut/ut.hpp>
 
-#include <PainPerdu/Parser/Patterns/PatternMatchHelper.hpp>
+#include <PainPerdu/parser/Patterns/PatternMatchHelper.hpp>
 
 using namespace boost::ut;
 

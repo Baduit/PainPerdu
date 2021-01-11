@@ -18,136 +18,226 @@ namespace patterns
 struct MoveRight
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct MoveLeft
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct Increment
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct Decrement
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct DefineReference
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct MoveToReference
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct DefineLabel
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct GoToLabel
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct IfCurrentValueEquals0
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct IfCurrentValueEqualsN
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct IfCursorIsAtReference
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct IfReferenceExists
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct IfLabelExists
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct GetChar
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 struct PutChar
 {
 	template <typename It>
-	static bool match(It, It, const ParsingState&) { return false; }
+	static bool match(It, It, const ParsingState&)
+	{
+		return false;
+	}
 
 	template <typename It>
-	static It action(It, It end, ParsingState&) { return end; }
+	static It action(It, It end, ParsingState&)
+	{
+		return end;
+	}
 };
 
 } // namespace patterns

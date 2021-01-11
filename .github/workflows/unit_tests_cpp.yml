@@ -13,9 +13,6 @@ jobs:
       with:
         submodules: recursive
 
-    - name: debug
-      run: ls -lR
-
     - name: Build project
       env:
         CC: gcc-10
