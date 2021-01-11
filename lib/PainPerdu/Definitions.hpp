@@ -25,12 +25,12 @@ namespace instructions
 
 struct MoveRight
 {
-	std::size_t value;
+	int value;
 };
 
 struct MoveLeft
 {
-	std::size_t value;
+	int value;
 };
 
 struct Increment
@@ -46,7 +46,6 @@ struct Decrement
 struct DefineReference
 {
 	std::string identifier;
-	std::size_t cursor_index;
 };
 
 struct MoveToReference
