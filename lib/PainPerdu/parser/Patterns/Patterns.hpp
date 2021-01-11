@@ -119,7 +119,7 @@ struct MoveToReference
 	{
 		auto identifier = std::get<crepuscule::Word>(*(begin + 1));
 		// todo check identifier does not contain any forbidden character
-		state.emplace_instruction<instructions::DefineReference>(std::string(identifier.value));
+		state.emplace_instruction<instructions::MoveToReference>(std::string(identifier.value));
 		return begin + 2;
 	}
 };
