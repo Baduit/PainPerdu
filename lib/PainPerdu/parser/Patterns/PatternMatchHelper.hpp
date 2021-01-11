@@ -88,8 +88,8 @@ bool match(It begin, It end, Args&&... args)
 		return match_impl(begin, args...);
 }
 
-}
+} // namespace patterns
 
-}
+} // namespace parser
 
-}
+} // namespace PainPerdu

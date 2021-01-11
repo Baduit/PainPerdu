@@ -2,6 +2,7 @@
 
 #include <external/brigand/brigand.hpp>
 
+#include <PainPerdu/Definitions.hpp>
 #include <PainPerdu/parser/ParsingState.hpp>
 #include <PainPerdu/parser/Patterns/PatternMatchHelper.hpp>
 

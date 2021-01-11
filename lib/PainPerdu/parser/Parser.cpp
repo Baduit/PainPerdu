@@ -55,7 +55,7 @@ Definitions Parser::operator()(std::string_view input)
 	Result tokenize_result = _tokeniser(input);
 	Expression& main_expression = tokenize_result.expression;
 
-	ParsingState state;
+	ParsingState state(defs);
 	auto it = main_expression.value.begin();
 	auto end = main_expression.value.end();
 	while (it != end)
