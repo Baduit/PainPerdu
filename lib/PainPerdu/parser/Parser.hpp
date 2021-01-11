@@ -17,7 +17,7 @@ class Parser
 	public:
 		Parser();
 
-		/* [[nodiscard]] */ Definitions operator()(std::string_view input);
+		Definitions operator()(std::string_view input);
 
 	private:
 		crepuscule::Tokenizer _tokeniser;

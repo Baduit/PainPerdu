@@ -37,6 +37,8 @@ A __reference__ is a location to a case, it can be created with an instruction.
 
 When the machine ends it will return the value of the last modified case.
 
+It is possible to add space, tabulations or new line between the instructions or annotations.
+
 ### Annotations
 In this table :
 * __id__ represents an identifier
