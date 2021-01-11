@@ -68,7 +68,6 @@ In this table :
 | [              | read 1 byte from the standard input and set the case at the cursor to the read value
 | ]              | write the case at the cursor in the standard output
 | $id            | the next instruction is executed if the reference id exists
-| .id            | the next instruction is executed if the label id exists
 
 ### System references
 | identifier          | description
