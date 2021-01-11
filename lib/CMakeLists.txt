@@ -1,6 +1,8 @@
 set(SRCS
     ./PainPerdu/PainPerdu.cpp
-    ./PainPerdu/parser/Parser.cpp)
+    ./PainPerdu/parser/Parser.cpp
+    ./PainPerdu/vm/VirtualMachine.cpp
+    ./PainPerdu/vm/Memory.cpp)
 
 add_subdirectory(external/crepuscule/lib)
 

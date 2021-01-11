@@ -24,12 +24,12 @@ class ParsingState
 		template <typename T, typename... Args>
 		void emplace_instruction(Args&&... args)
 		{
-			_definitions.instructions.emplace_back(T(args...));
+			_definitions.recipe.emplace_back(T(args...));
 		}
 
 		std::size_t get_next_instruction_index() const
 		{
-			return _definitions.instructions.size();
+			return _definitions.recipe.size();
 		}
 
 	private:

@@ -106,6 +106,24 @@ struct DefineReference
 	}
 };
 
+struct UndefineReference
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("."), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto identifier = std::get<crepuscule::Word>(*(begin + 1));
+		// todo check identifier does not contain any forbidden character
+		state.emplace_instruction<instructions::UndefineReference>(std::string(identifier.value));
+		return begin + 2;
+	}
+};
+
 struct MoveToReference
 {
 	template <typename It>
@@ -231,24 +249,6 @@ struct IfReferenceExists
 	}
 };
 
-struct IfLabelExists
-{
-	template <typename It>
-	static bool match(It begin, It end, const ParsingState&)
-	{
-		return helper::match(begin, end, Operator("."), AnyWord{});
-	}
-
-	template <typename It>
-	static It action(It begin, It, ParsingState& state)
-	{
-		auto identifier = std::get<crepuscule::Word>(*(begin + 1));
-		// todo check identifier does not contain any forbidden character
-		state.emplace_instruction<instructions::IfLabelExists>(std::string(identifier.value));
-		return begin + 2;
-	}
-};
-
 struct GetChar
 {
 	template <typename It>
@@ -291,6 +291,7 @@ using Patterns =
 			patterns::Increment,
 			patterns::Decrement,
 			patterns::DefineReference,
+			patterns::UndefineReference,
 			patterns::MoveToReference,
 			patterns::DefineLabel,
 			patterns::GoToLabel,
@@ -298,7 +299,6 @@ using Patterns =
 			patterns::IfCurrentValueEquals0,
 			patterns::IfCursorIsAtReference,
 			patterns::IfReferenceExists,
-			patterns::IfLabelExists,
 			patterns::GetChar,
 			patterns::PutChar
 		>;

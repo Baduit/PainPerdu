@@ -32,11 +32,11 @@ void basic()
 	PainPerdu::Parser parser;
 	auto defs = parser(code);
 	
-	expect((defs.instructions.size() == 4) >> fatal);
-	expect(defs.instructions[0] == PainPerdu::instructions::MoveRight{1});
-	expect(defs.instructions[1] == PainPerdu::instructions::MoveLeft{1});
-	expect(defs.instructions[2] == PainPerdu::instructions::Increment{255});
-	expect(defs.instructions[3] == PainPerdu::instructions::Decrement{1});
+	expect((defs.recipe.size() == 4) >> fatal);
+	expect(defs.recipe[0] == PainPerdu::instructions::MoveRight{1});
+	expect(defs.recipe[1] == PainPerdu::instructions::MoveLeft{1});
+	expect(defs.recipe[2] == PainPerdu::instructions::Increment{255});
+	expect(defs.recipe[3] == PainPerdu::instructions::Decrement{1});
 }
 
 void all()
@@ -48,22 +48,22 @@ void all()
 	expect((defs.annotations.size() == 1) >> fatal);
 	expect(defs.annotations[0] == PainPerdu::annotations::DefineLabel{"label", 0});
 
-	expect((defs.instructions.size() == 15) >> fatal);
-	expect(defs.instructions[0] == PainPerdu::instructions::MoveRight{1});
-	expect(defs.instructions[1] == PainPerdu::instructions::MoveLeft{1});
-	expect(defs.instructions[2] == PainPerdu::instructions::Increment{255});
-	expect(defs.instructions[3] == PainPerdu::instructions::Decrement{1});
-	expect(defs.instructions[4] == PainPerdu::instructions::DefineReference{"ref"});
-	expect(defs.instructions[5] == PainPerdu::instructions::MoveToReference{"ref"});
-	expect(defs.instructions[6] == PainPerdu::instructions::GoToLabel{"label"});
-	expect(defs.instructions[7] == PainPerdu::instructions::IfCurrentValueEquals0{});
-	expect(defs.instructions[8] == PainPerdu::instructions::IfCurrentValueEqualsN{5});
-	expect(defs.instructions[9] == PainPerdu::instructions::IfCursorIsAtReference{"aa"});
-	expect(defs.instructions[10] == PainPerdu::instructions::GetChar{});
-	expect(defs.instructions[11] == PainPerdu::instructions::PutChar{});
-	expect(defs.instructions[12] == PainPerdu::instructions::IfReferenceExists{"lol"});
-	expect(defs.instructions[13] == PainPerdu::instructions::IfLabelExists{"sauce"});
-	expect(defs.instructions[14] == PainPerdu::instructions::MoveRight{12});
+	expect((defs.recipe.size() == 15) >> fatal);
+	expect(defs.recipe[0] == PainPerdu::instructions::MoveRight{1});
+	expect(defs.recipe[1] == PainPerdu::instructions::MoveLeft{1});
+	expect(defs.recipe[2] == PainPerdu::instructions::Increment{255});
+	expect(defs.recipe[3] == PainPerdu::instructions::Decrement{1});
+	expect(defs.recipe[4] == PainPerdu::instructions::DefineReference{"ref"});
+	expect(defs.recipe[5] == PainPerdu::instructions::MoveToReference{"ref"});
+	expect(defs.recipe[6] == PainPerdu::instructions::GoToLabel{"label"});
+	expect(defs.recipe[7] == PainPerdu::instructions::IfCurrentValueEquals0{});
+	expect(defs.recipe[8] == PainPerdu::instructions::IfCurrentValueEqualsN{5});
+	expect(defs.recipe[9] == PainPerdu::instructions::IfCursorIsAtReference{"aa"});
+	expect(defs.recipe[10] == PainPerdu::instructions::GetChar{});
+	expect(defs.recipe[11] == PainPerdu::instructions::PutChar{});
+	expect(defs.recipe[12] == PainPerdu::instructions::IfReferenceExists{"lol"});
+	expect(defs.recipe[13] == PainPerdu::instructions::UndefineReference{"sauce"});
+	expect(defs.recipe[14] == PainPerdu::instructions::MoveRight{12});
 }
 
 int main()

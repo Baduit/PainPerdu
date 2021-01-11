@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <variant>
 #include <compare>
+#include <algorithm>
+#include <iterator>
 
 namespace PainPerdu
 {
@@ -61,6 +63,13 @@ struct DefineReference
 	std::string identifier;
 };
 
+struct UndefineReference
+{
+	bool operator==(const UndefineReference&) const = default;
+	
+	std::string identifier;
+};
+
 struct MoveToReference
 {
 	bool operator==(const MoveToReference&) const = default;
@@ -103,13 +112,6 @@ struct IfReferenceExists
 	std::string identifier;
 };
 
-struct IfLabelExists
-{
-	bool operator==(const IfLabelExists&) const = default;
-	
-	std::string identifier;
-};
-
 struct GetChar
 {
 	bool operator==(const GetChar&) const = default;
@@ -133,13 +135,13 @@ using Instruction =
 			instructions::Increment,
 			instructions::Decrement,
 			instructions::DefineReference,
+			instructions::UndefineReference,
 			instructions::MoveToReference,
 			instructions::GoToLabel,
 			instructions::IfCurrentValueEquals0,
 			instructions::IfCurrentValueEqualsN,
 			instructions::IfCursorIsAtReference,
 			instructions::IfReferenceExists,
-			instructions::IfLabelExists,
 			instructions::GetChar,
 			instructions::PutChar
 		>;
@@ -147,9 +149,24 @@ using Instruction =
 struct Definitions
 {
 	bool operator==(const Definitions&) const = default;
+
+	Definitions& operator+=(const Definitions& other)
+	{
+		annotations.insert(annotations.end(), other.annotations.begin(), other.annotations.end());
+		recipe.insert(recipe.end(), other.recipe.begin(), other.recipe.end());
+		return *this;
+	}
+
+	Definitions& operator+=(Definitions&& other)
+	{
+		annotations.insert(annotations.end(), std::make_move_iterator(other.annotations.begin()), std::make_move_iterator(other.annotations.end()));
+		recipe.insert(recipe.end(), std::make_move_iterator(other.recipe.begin()), std::make_move_iterator(other.recipe.end()));
+		return *this;
+	}
 	
 	std::vector<Annotation> annotations;
-	std::vector<Instruction> instructions;
+	std::vector<Instruction> recipe;
 };
+// TODO: define operator >> to be able to dump Definitions into a stream (so I can dump optimized code)
 
 } // namespace PainPerdu
