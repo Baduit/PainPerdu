@@ -32,14 +32,14 @@ struct MoveRight
 {
 	bool operator==(const MoveRight&) const = default;
 	
-	int value;
+	std::size_t value;
 };
 
 struct MoveLeft
 {
 	bool operator==(const MoveLeft&) const = default;
 	
-	int value;
+	std::size_t value;
 };
 
 struct Increment

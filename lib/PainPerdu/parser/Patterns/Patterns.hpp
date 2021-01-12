@@ -28,7 +28,7 @@ struct MoveRight
 	static It action(It begin, It, ParsingState& state)
 	{
 		auto integer = std::get<crepuscule::Integer>(*(begin + 1));
-		state.emplace_instruction<instructions::MoveRight>(integer.value);
+		state.emplace_instruction<instructions::MoveRight>(static_cast<std::size_t>(integer.value));
 		return begin + 2;
 	}
 };
@@ -45,7 +45,7 @@ struct MoveLeft
 	static It action(It begin, It, ParsingState& state)
 	{
 		auto integer = std::get<crepuscule::Integer>(*(begin + 1));
-		state.emplace_instruction<instructions::MoveLeft>(integer.value);
+		state.emplace_instruction<instructions::MoveLeft>(static_cast<std::size_t>(integer.value));
 		return begin + 2;
 	}
 };
