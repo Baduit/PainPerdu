@@ -93,11 +93,15 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::GetChar, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					// todo check _in state
+					uint8_t c = 0;
+					_in >> c;
+					_memory.set_current_case(c);
+					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::PutChar, T>)
 				{
+					// todo check _out state
 					_out << _memory.get_current_case();
 					_step += 1;
 				}
