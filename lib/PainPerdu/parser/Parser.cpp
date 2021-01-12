@@ -97,7 +97,12 @@ Parser::Parser():
 
 Definitions Parser::operator()(std::string_view input)
 {
-	using namespace crepuscule;
+	return (*this)(std::string(input));
+}
+
+Definitions Parser::operator()(std::string&& input)
+{
+		using namespace crepuscule;
 
 	Definitions defs;
 	Result tokenize_result = _tokeniser(input);
@@ -132,7 +137,6 @@ Definitions Parser::operator()(std::string_view input)
 
 	return defs;
 }
-
 
 } // namespace parser
 

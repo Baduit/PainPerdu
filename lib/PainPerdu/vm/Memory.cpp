@@ -6,6 +6,11 @@ namespace PainPerdu
 namespace vm
 {
 
+Memory::Memory()
+{
+	_stack.resize(1);
+}
+
 void Memory::advance_cursor(std::size_t n)
 {
 	_cursor += n;

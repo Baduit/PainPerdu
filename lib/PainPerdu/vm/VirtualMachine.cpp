@@ -98,8 +98,8 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::PutChar, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					_out << _memory.get_current_case();
+					_step += 1;
 				}
 				else
 				{

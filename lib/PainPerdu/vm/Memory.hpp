@@ -12,7 +12,7 @@ namespace vm
 class Memory
 {
 	public:
-		Memory() = default;
+		Memory();
 
 		void advance_cursor(std::size_t n);
 		void move_back_cursor(std::size_t n);
