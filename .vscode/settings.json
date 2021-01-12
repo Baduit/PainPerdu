@@ -59,6 +59,18 @@
 		"xmemory": "cpp",
 		"xstddef": "cpp",
 		"xstring": "cpp",
-		"xutility": "cpp"
+		"xutility": "cpp",
+		"codecvt": "cpp",
+		"ctime": "cpp",
+		"map": "cpp",
+		"filesystem": "cpp",
+		"fstream": "cpp",
+		"iomanip": "cpp",
+		"locale": "cpp",
+		"xlocbuf": "cpp",
+		"xlocmes": "cpp",
+		"xlocmon": "cpp",
+		"xloctime": "cpp",
+		"xtree": "cpp"
 	}
 }

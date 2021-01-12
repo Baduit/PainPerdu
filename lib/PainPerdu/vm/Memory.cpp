@@ -11,10 +11,10 @@ Memory::Memory()
 	_stack.resize(1);
 }
 
-void Memory::advance_cursor(std::size_t n)
+bool Memory::advance_cursor(std::size_t n)
 {
 	_cursor += n;
-	resize_if_needed();
+	return resize_if_needed();
 }
 
 void Memory::move_back_cursor(std::size_t n)
@@ -22,10 +22,10 @@ void Memory::move_back_cursor(std::size_t n)
 	_cursor -= n;
 }
 
-void Memory::move_cursor_to(std::size_t position)
+bool Memory::move_cursor_to(std::size_t position)
 {
 	_cursor = position;
-	resize_if_needed();
+	return resize_if_needed();
 }
 
 void Memory::move_cursor_to_no_check(std::size_t position)
@@ -59,12 +59,19 @@ void Memory::set_current_case(uint8_t n)
 	_stack[_cursor] = n;
 }
 
-void Memory::resize_if_needed()
+bool Memory::resize_if_needed()
 {
 	if (_cursor >= _stack.size())
 	{
 		_stack.resize(_cursor);
+		return true;
 	}
+	return false;
+}
+
+std::size_t Memory::get_stack_size() const
+{
+	return _stack.size();
 }
 
 } // namespace vm

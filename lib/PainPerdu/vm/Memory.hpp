@@ -14,10 +14,10 @@ class Memory
 	public:
 		Memory();
 
-		void advance_cursor(std::size_t n);
+		bool advance_cursor(std::size_t n);
 		void move_back_cursor(std::size_t n);
 
-		void move_cursor_to(std::size_t position);
+		bool move_cursor_to(std::size_t position);
 		void move_cursor_to_no_check(std::size_t position);
 
 		std::size_t get_cursor_position() const;
@@ -28,8 +28,10 @@ class Memory
 		uint8_t get_current_case() const;
 		void set_current_case(uint8_t n);
 
+		std::size_t get_stack_size() const;
+
 	private:
-		void resize_if_needed();
+		bool resize_if_needed();
 
 	private:
 		std::vector<uint8_t> _stack;
