@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <iostream>
 
 #include <PainPerdu/Definitions.hpp>
@@ -29,6 +30,8 @@ class VirtualMachine
 		Memory _memory;
 		// I use integers instead of iterators to avoid iterator invalidation
 		std::size_t _step = 0;
+
+		std::map<std::string, std::size_t> _references;
 };
 
 } // namespace vm

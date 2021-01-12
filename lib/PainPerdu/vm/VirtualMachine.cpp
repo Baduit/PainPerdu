@@ -53,18 +53,19 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::DefineReference, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					_references[current_instruction.identifier] = _memory.get_cursor_position();
+					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::UndefineReference, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					_references.erase(current_instruction.identifier);
+					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::MoveToReference, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					// No need to check, because if there is a reference, it already exists
+					_memory.move_cursor_to_no_check(_references[current_instruction.identifier]);
+					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::GoToLabel, T>)
 				{
