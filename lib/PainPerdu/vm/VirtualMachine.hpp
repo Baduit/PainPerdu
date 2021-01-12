@@ -32,6 +32,7 @@ class VirtualMachine
 		std::size_t _step = 0;
 
 		std::map<std::string, std::size_t> _references;
+		std::map<std::string, std::size_t> _labels;
 };
 
 } // namespace vm

@@ -3,6 +3,14 @@
 #include <PainPerdu/vm/VirtualMachine.hpp>
 #include <PainPerdu/misc/Log.hpp>
 
+namespace
+{
+
+template<class> inline constexpr bool always_false_v = false;
+
+} // namespace
+
+
 namespace PainPerdu
 {
 
@@ -16,10 +24,26 @@ VirtualMachine::VirtualMachine(std::istream& in, std::ostream& out):
 
 void VirtualMachine::compile(Definitions definitions)
 {
+	std::size_t old_recipe_size = _definitions.recipe.size();
 	_definitions += optimize(std::move(definitions));
-}
 
-template<class> inline constexpr bool always_false_v = false;
+	for (const auto& a: definitions.annotations)
+	{
+		std::visit(
+			[&](const auto& annotation)
+			{
+				using T = std::decay_t<decltype(annotation)>;
+				if constexpr (std::same_as<annotations::DefineLabel, T>)
+				{
+					_labels[annotation.identifier] = annotation.step_index + old_recipe_size;
+				}
+				else
+				{
+					static_assert(always_false_v<T>, "non-exhaustive visitor!");
+				}
+			}, a);
+	}
+}
 
 void VirtualMachine::run()
 {
@@ -69,8 +93,7 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::GoToLabel, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					_step = _labels[current_instruction.identifier];
 				}
 				else if constexpr (std::same_as<instructions::IfCurrentValueEquals0, T>)
 				{
@@ -119,6 +142,7 @@ Definitions VirtualMachine::optimize(Definitions&& definitions)
 	// todo : optimize cursor movement
 	// todo : optimize step movement
 	// todo : optimize incr/decr
+	// Do not forget to update the labels's index
 	return definitions;
 }
 
