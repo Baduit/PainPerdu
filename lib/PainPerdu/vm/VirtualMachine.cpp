@@ -97,23 +97,43 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::IfCurrentValueEquals0, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					if (_memory.get_current_case() == 0)
+						_step += 1;
+					else
+						_step += 2;
 				}
 				else if constexpr (std::same_as<instructions::IfCurrentValueEqualsN, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					if (_memory.get_current_case() == current_instruction.value)
+						_step += 1;
+					else
+						_step += 2;
 				}
 				else if constexpr (std::same_as<instructions::IfCursorIsAtReference, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					if (auto it = _references.find(current_instruction.identifier); it != _references.end())
+					{
+						if (_memory.get_cursor_position() == it->second)
+							_step += 1;
+						else
+							_step += 2;
+					}
+					else
+					{
+						logger[LogCategory::VM].error("Reference does not exist");
+						run = false;	
+					}
 				}
 				else if constexpr (std::same_as<instructions::IfReferenceExists, T>)
 				{
-					logger[LogCategory::VM].error("Not implemented yet.");
-					run = false;
+					if (auto it = _references.find(current_instruction.identifier); it != _references.end())
+					{
+						_step += 1;	
+					}
+					else
+					{
+						_step += 2;
+					}
 				}
 				else if constexpr (std::same_as<instructions::GetChar, T>)
 				{
