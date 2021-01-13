@@ -61,49 +61,66 @@ void VirtualMachine::run()
 				using T = std::decay_t<decltype(current_instruction)>;
 				if constexpr (std::same_as<instructions::MoveRight, T>)
 				{
+					//logger[LogCategory::VM].debug("Move right");
 					if (_memory.advance_cursor(current_instruction.value))
 						_references["__end__"] = _memory.get_stack_size();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::MoveLeft, T>)
 				{
+					//logger[LogCategory::VM].debug("Move left");
 					_memory.move_back_cursor(current_instruction.value);
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::Increment, T>)
 				{
+					//logger[LogCategory::VM].debug("Incr");
 					_memory.incr_current_case(current_instruction.value);
 					_references["__last_modified__"] = _memory.get_cursor_position();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::Decrement, T>)
 				{
+					//logger[LogCategory::VM].debug("Decr");
 					_memory.decr_current_case(current_instruction.value);
 					_references["__last_modified__"] = _memory.get_cursor_position();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::DefineReference, T>)
 				{
+					//logger[LogCategory::VM].debug("Define reference");
 					_references[current_instruction.identifier] = _memory.get_cursor_position();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::UndefineReference, T>)
 				{
+					//logger[LogCategory::VM].debug("Undefine reference");
 					_references.erase(current_instruction.identifier);
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::MoveToReference, T>)
 				{
+					//logger[LogCategory::VM].debug("Move to reference");
 					// No need to check, because if there is a reference, it already exists
 					_memory.move_cursor_to_no_check(_references[current_instruction.identifier]);
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::GoToLabel, T>)
 				{
-					_step = _labels[current_instruction.identifier];
+					//logger[LogCategory::VM].debug("GoToLabel : ", current_instruction.identifier);
+					if (auto it = _labels.find(current_instruction.identifier); it != _labels.end())
+					{
+						_step = it->second;
+					}
+					else
+					{
+						logger[LogCategory::VM].error("Label '", current_instruction.identifier, "' does not exist");
+						run = false;
+					}
 				}
 				else if constexpr (std::same_as<instructions::IfCurrentValueDifferent0, T>)
 				{
+					//logger[LogCategory::VM].debug("Condition with 0, current value is == ", _memory.get_current_case(), " cursor is at ", _memory.get_cursor_position());
 					if (_memory.get_current_case() != 0)
 						_step += 1;
 					else
@@ -111,6 +128,7 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::IfCurrentValueEqualsN, T>)
 				{
+					//logger[LogCategory::VM].debug("Check current value with n");
 					if (_memory.get_current_case() == current_instruction.value)
 						_step += 1;
 					else
@@ -118,6 +136,7 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::IfCursorIsAtReference, T>)
 				{
+					//logger[LogCategory::VM].debug("Check cursor is at reference");
 					if (auto it = _references.find(current_instruction.identifier); it != _references.end())
 					{
 						if (_memory.get_cursor_position() == it->second)
@@ -127,12 +146,13 @@ void VirtualMachine::run()
 					}
 					else
 					{
-						logger[LogCategory::VM].error("Reference does not exist");
+						logger[LogCategory::VM].error("Reference '", current_instruction.identifier, "' does not exist");
 						run = false;	
 					}
 				}
 				else if constexpr (std::same_as<instructions::IfReferenceExists, T>)
 				{
+					//logger[LogCategory::VM].debug("Check reference exists");
 					if (auto it = _references.find(current_instruction.identifier); it != _references.end())
 						_step += 1;	
 					else
@@ -140,6 +160,7 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::GetChar, T>)
 				{
+					//logger[LogCategory::VM].debug("Get char");
 					// todo check _in state
 					uint8_t c = 0;
 					_in >> c;
@@ -149,6 +170,7 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::PutChar, T>)
 				{
+					//logger[LogCategory::VM].debug("Put char");
 					// todo check _out state
 					_out << _memory.get_current_case();
 					_step += 1;

@@ -183,7 +183,8 @@ void hello_print()
 		"*print_end"
 		":print_impl"
 		"]>1*print"
-		":print_end";
+		":print_end"
+		">1#this_is_to_add_a_backslash_zero";
 
 	std::stringstream in;
 	std::stringstream out;
