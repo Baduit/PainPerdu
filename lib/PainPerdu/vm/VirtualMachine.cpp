@@ -56,7 +56,7 @@ void VirtualMachine::run()
 	while (run && _step < _definitions.recipe.size())
 	{
 		std::visit(
-			[&](const auto& current_instruction)
+			[&, this](const auto& current_instruction)
 			{
 				using T = std::decay_t<decltype(current_instruction)>;
 				if constexpr (std::same_as<instructions::MoveRight, T>)

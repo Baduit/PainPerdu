@@ -1,4 +1,5 @@
 #include <PainPerdu/vm/Memory.hpp>
+#include <PainPerdu/misc/Log.hpp>
 
 namespace PainPerdu
 {
@@ -8,7 +9,7 @@ namespace vm
 
 Memory::Memory()
 {
-	_stack.resize(1);
+	_stack.resize(1, 0);
 }
 
 bool Memory::advance_cursor(std::size_t n)
@@ -63,7 +64,7 @@ bool Memory::resize_if_needed()
 {
 	if (_cursor >= _stack.size())
 	{
-		_stack.resize(_cursor);
+		_stack.resize(_cursor + 1 , 0);
 		return true;
 	}
 	return false;
@@ -72,6 +73,15 @@ bool Memory::resize_if_needed()
 std::size_t Memory::get_stack_size() const
 {
 	return _stack.size();
+}
+
+void Memory::debug_dump_memory() const
+{
+	for (int i = 0; auto c: _stack)
+	{
+		logger[LogCategory::VM].debug("Case nb : ", i, " has a value of : ", int(c));
+		++i;
+	}
 }
 
 } // namespace vm

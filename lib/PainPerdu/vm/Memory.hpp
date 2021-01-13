@@ -30,6 +30,8 @@ class Memory
 
 		std::size_t get_stack_size() const;
 
+		void debug_dump_memory() const;
+
 	private:
 		bool resize_if_needed();
 
