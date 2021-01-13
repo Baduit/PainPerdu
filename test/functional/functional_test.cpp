@@ -157,9 +157,47 @@ void hello_world_labels()
 	expect(out.str() == "Hello World!\n");
 }
 
+void hello_print()
+{
+	std::string_view code =
+		"+72     "
+		">1 +101 "
+		">1 +108 "
+		">1 +108 "
+		">1 +111 "
+		">1 +32  "
+		">1 +87  "
+		">1 +111 "
+		">1 +114 "
+		">1 +108 "
+		">1 +100 "
+		">1 +33  "
+		">1 +10 "
+		"@__begin__"
+
+		"*print"
+
+		"*print_end"
+		":print"
+		"?*print_impl"
+		"*print_end"
+		":print_impl"
+		"]>1*print"
+		":print_end";
+
+	std::stringstream in;
+	std::stringstream out;
+
+	PainPerdu::Interpreter interpreter(in, out);
+	interpreter.compile_and_run(code);
+	
+	expect(out.str() == "Hello World!\n");
+}
+
 int main()
 {
 	"hello_world_one_case"_test = hello_world_one_case;
 	"hello_world_multiple_cases"_test = hello_world_multiple_cases;
 	"hello_world_labels"_test = hello_world_labels;
+	"hello_print"_test = hello_print;
 }

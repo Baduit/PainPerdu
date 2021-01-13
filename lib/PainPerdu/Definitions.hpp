@@ -84,9 +84,9 @@ struct GoToLabel
 	std::string identifier;
 };
 
-struct IfCurrentValueEquals0
+struct IfCurrentValueDifferent0
 {
-	bool operator==(const IfCurrentValueEquals0&) const = default;
+	bool operator==(const IfCurrentValueDifferent0&) const = default;
 	
 
 };
@@ -138,7 +138,7 @@ using Instruction =
 			instructions::UndefineReference,
 			instructions::MoveToReference,
 			instructions::GoToLabel,
-			instructions::IfCurrentValueEquals0,
+			instructions::IfCurrentValueDifferent0,
 			instructions::IfCurrentValueEqualsN,
 			instructions::IfCursorIsAtReference,
 			instructions::IfReferenceExists,

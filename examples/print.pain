@@ -1,0 +1,25 @@
++72     
+>1 +101 
+>1 +108 
+>1 +108 
+>1 +111 
+>1 +32  
+>1 +87  
+>1 +111 
+>1 +114 
+>1 +108 
+>1 +100 
+>1 +33  
+>1 +10 
+@__begin__
+
+*print
+
+*print_end
+:print
+?*print_impl
+*print_end
+:print_impl
+]>1*print
+:print_end
+

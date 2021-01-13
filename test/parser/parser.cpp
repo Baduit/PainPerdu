@@ -56,7 +56,7 @@ void all()
 	expect(defs.recipe[4] == PainPerdu::instructions::DefineReference{"ref"});
 	expect(defs.recipe[5] == PainPerdu::instructions::MoveToReference{"ref"});
 	expect(defs.recipe[6] == PainPerdu::instructions::GoToLabel{"label"});
-	expect(defs.recipe[7] == PainPerdu::instructions::IfCurrentValueEquals0{});
+	expect(defs.recipe[7] == PainPerdu::instructions::IfCurrentValueDifferent0{});
 	expect(defs.recipe[8] == PainPerdu::instructions::IfCurrentValueEqualsN{5});
 	expect(defs.recipe[9] == PainPerdu::instructions::IfCursorIsAtReference{"aa"});
 	expect(defs.recipe[10] == PainPerdu::instructions::GetChar{});

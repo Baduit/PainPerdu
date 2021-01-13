@@ -197,7 +197,7 @@ struct IfCurrentValueEqualsN
 	}
 };
 
-struct IfCurrentValueEquals0
+struct IfCurrentValueDifferent0
 {
 	template <typename It>
 	static bool match(It begin, It end, const ParsingState&)
@@ -208,7 +208,7 @@ struct IfCurrentValueEquals0
 	template <typename It>
 	static It action(It begin, It, ParsingState& state)
 	{
-		state.emplace_instruction<instructions::IfCurrentValueEquals0>();
+		state.emplace_instruction<instructions::IfCurrentValueDifferent0>();
 		return begin + 1;
 	}
 };
@@ -295,8 +295,8 @@ using Patterns =
 			patterns::MoveToReference,
 			patterns::DefineLabel,
 			patterns::GoToLabel,
-			patterns::IfCurrentValueEqualsN, // this one must absoluterly be before "IfCurrentValueEquals0"
-			patterns::IfCurrentValueEquals0,
+			patterns::IfCurrentValueEqualsN, // this one must absoluterly be before "IfCurrentValueDifferent0"
+			patterns::IfCurrentValueDifferent0,
 			patterns::IfCursorIsAtReference,
 			patterns::IfReferenceExists,
 			patterns::GetChar,

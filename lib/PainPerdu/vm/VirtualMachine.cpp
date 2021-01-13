@@ -102,9 +102,9 @@ void VirtualMachine::run()
 				{
 					_step = _labels[current_instruction.identifier];
 				}
-				else if constexpr (std::same_as<instructions::IfCurrentValueEquals0, T>)
+				else if constexpr (std::same_as<instructions::IfCurrentValueDifferent0, T>)
 				{
-					if (_memory.get_current_case() == 0)
+					if (_memory.get_current_case() != 0)
 						_step += 1;
 					else
 						_step += 2;
