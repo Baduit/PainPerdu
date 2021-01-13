@@ -30,7 +30,7 @@ void VirtualMachine::compile(Definitions definitions)
 	std::size_t old_recipe_size = _definitions.recipe.size();
 	_definitions += optimize(std::move(definitions));
 
-	for (const auto& a: definitions.annotations)
+	for (const auto& a: _definitions.annotations)
 	{
 		std::visit(
 			[&](const auto& annotation)
