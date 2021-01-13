@@ -79,7 +79,7 @@ void Memory::debug_dump_memory() const
 {
 	for (int i = 0; auto c: _stack)
 	{
-		logger[LogCategory::VM].debug("Case nb : ", i, " has a value of : ", int(c));
+		logger[LogCategory::VM].debug("Case nb : ", i, " has a value of : ", static_cast<int>(c));
 		++i;
 	}
 }
