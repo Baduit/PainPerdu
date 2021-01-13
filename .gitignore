@@ -38,3 +38,6 @@ build_gcc
 build_clang
 build_windows
 build_linux
+msvc_build
+gcc_build
+clang_build
