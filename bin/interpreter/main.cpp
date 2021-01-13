@@ -8,7 +8,7 @@ namespace fs = std::filesystem;
 
 inline std::string		readAllContent(std::string_view filename)
 {
-	std::ifstream	file(filename.data());
+	std::ifstream	file(filename.data(), std::ios::binary);
 	if (!file)
 		throw std::runtime_error("Invalid file");
 
