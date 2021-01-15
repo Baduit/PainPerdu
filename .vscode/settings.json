@@ -71,6 +71,12 @@
 		"xlocmes": "cpp",
 		"xlocmon": "cpp",
 		"xloctime": "cpp",
-		"xtree": "cpp"
+		"xtree": "cpp",
+		"regex": "cpp",
+		"clocale": "cpp",
+		"csignal": "cpp",
+		"forward_list": "cpp",
+		"numeric": "cpp",
+		"valarray": "cpp"
 	}
 }

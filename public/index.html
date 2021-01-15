@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <title>PainPerdu Online</title>
+  </head>
+  <body>
+    <div id="app" tabindex="0">
+      <div id="yololText">
+        <textarea
+          id="yololInput"
+		  placeholder="Type your PainPerdu code here"
+		  spellcheck="false"
+		></textarea>
+		<div id="output">
+			<div id="yololOutputContainer">
+				<textarea
+				id="yololOutput"
+				readonly
+				></textarea>
+			</div>
+			<div id="outputCanvasContainer">
+				<p>Canvas output:</p>
+				<canvas
+					id="outputCanvas">
+				</canvas>
+			</div>
+		</div>
+		<a
+			onclick="ask_nicely_the_api_to_run_the_code()"
+          	><img id="runButton" width="100px" src="assets/icons/run.png"
+        /></a>
+      </div>
+    </div>
+    <div id="footer" class="noselect">
+      <a href="https://github.com/Baduit/PainPerdu"
+        ><img width="30px" src="assets/icons/github.svg"
+      /></a>
+	</div>
+	<script>
+		function ask_nicely_the_api_to_run_the_code() {
+			const options = {
+				method: 'POST',
+				body: document.getElementById("yololInput").value,
+				headers: {
+					'Content-Type': 'text/plain'
+				}
+			}
+			fetch("http://127.0.0.1:6574/execute", options)
+				.then(function (response) {
+					return response.text();
+				})
+				.then(function (myText) {
+					var canvas = document.getElementById("outputCanvas")
+					var canvas_context = canvas.getContext("2d");
+
+					canvas_context.clearRect(0, 0, canvas.width, canvas.height);
+					canvas_context.beginPath()
+
+					console.log(myText);	
+
+					const answer = JSON.parse(myText);
+
+					document.getElementById("yololOutput").value = answer.out;
+				})
+				.catch(function (error) {
+					console.log("Error: " + error);
+				});
+		}
+	</script>
+  </body>
+</html>
