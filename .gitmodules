@@ -1,3 +1,3 @@
-[submodule ".\\lib\\external\\crepuscule"]
-	path = .\\lib\\external\\crepuscule
+[submodule "lib/external/crepuscule"]
+	path = lib/external/crepuscule
 	url = https://github.com/Baduit/Crepuscule

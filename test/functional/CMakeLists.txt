@@ -1,0 +1,1 @@
+addTest(functional_test functional_test.cpp)

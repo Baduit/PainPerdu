@@ -37,6 +37,8 @@ A __reference__ is a location to a case, it can be created with an instruction.
 
 When the machine ends it will return the value of the last modified case.
 
+It is possible to add space, tabulations or new line between the instructions or annotations.
+
 ### Annotations
 In this table :
 * __id__ represents an identifier
@@ -55,18 +57,18 @@ In this table :
 | -------------- | -------------
 | >n             | move the cursor of n cases to the right
 | <n             | move the cursor of n cases to the left
-| +n             | increment the value pointed by the cursor of n
-| -n             | decrement the value pointed by the cursor of n
+| +n             | increment the value pointed by the cursor of n (n must be between 0 and 255 included)
+| -n             | decrement the value pointed by the cursor of n (n must be between 0 and 255 included)
 | #id            | define of a reference id to the current location of the cursor, it can override an existing reference
-| @id            | move the cursor to the reference id
-| *id            | move the step to the label id, the next instruction executed will be the instruction pointed by the label
+| .id            | undefine a reference id, the machine crash if the reference does not exist
+| @id            | move the cursor to the reference id, the machine crash if the reference does not exist
+| *id            | move the step to the label id, the next instruction executed will be the instruction pointed by the label, the machine crash if the label does not exist
 | ?              | the next instruction is executed only if the case at the cursor is not equal to 0
-| ?n             | the next instruction is executed only if the case at the cursor by is equal to n
-| !id            | the next instruction is executed if the cursor is not at the reference id
+| ?n             | the next instruction is executed only if the case at the cursor by is equal to n (n must be between 0 and 255 included)
+| !id            | the next instruction is executed if the cursor is not at the reference id, the machine crash if the label does not exist
 | [              | read 1 byte from the standard input and set the case at the cursor to the read value
 | ]              | write the case at the cursor in the standard output
 | $id            | the next instruction is executed if the reference id exists
-| .id            | the next instruction is executed if the label id exists
 
 ### System references
 | identifier          | description

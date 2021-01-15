@@ -1,0 +1,43 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build_linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Build project
+      env:
+        CC: gcc-10
+        CXX: g++-10
+      run: |
+        cmake .
+        cmake --build .
+
+    - name: Run tests
+      run: ctest
+
+  build_windows:
+    name: Build Windows
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Build
+      run: |
+        cmake .
+        cmake --build .
+
+    - name: Run tests
+      run: ctest
