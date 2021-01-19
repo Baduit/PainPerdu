@@ -22,6 +22,15 @@ class VirtualMachine
 
 		Definitions optimize(Definitions&& definitions);
 
+		void enable_get_char();
+		void disable_get_char();
+
+	private:
+		std::size_t get_label(const std::string& identifier) const;
+		std::size_t get_reference(const std::string& identifier) const;
+
+		uint8_t get_value_at_reference(const std::string& identifier) const;
+
 	private:
 		std::istream& _in;
 		std::ostream& _out;
@@ -33,6 +42,9 @@ class VirtualMachine
 
 		std::map<std::string, std::size_t> _references;
 		std::map<std::string, std::size_t> _labels;
+		std::map<std::string, std::size_t> _labels_rewind;
+
+		bool _get_char_enabled = true;
 };
 
 } // namespace vm

@@ -24,6 +24,7 @@ class Memory
 
 		void incr_current_case(uint8_t n);
 		void decr_current_case(uint8_t n);
+		void reset_current_case();
 
 		uint8_t get_current_case() const;
 		void set_current_case(uint8_t n);
@@ -31,6 +32,8 @@ class Memory
 		std::size_t get_stack_size() const;
 
 		void debug_dump_memory() const;
+
+		const std::vector<uint8_t>& get_stack() const;
 
 	private:
 		bool resize_if_needed();

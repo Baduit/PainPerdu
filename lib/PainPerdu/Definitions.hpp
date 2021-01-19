@@ -35,11 +35,25 @@ struct MoveRight
 	std::size_t value;
 };
 
+struct MoveRightRef
+{
+	bool operator==(const MoveRightRef&) const = default;
+	
+	std::string reference;
+};
+
 struct MoveLeft
 {
 	bool operator==(const MoveLeft&) const = default;
 	
 	std::size_t value;
+};
+
+struct MoveLeftRef
+{
+	bool operator==(const MoveLeftRef&) const = default;
+	
+	std::string reference;
 };
 
 struct Increment
@@ -49,11 +63,30 @@ struct Increment
 	uint8_t value;
 };
 
+struct IncrementRef
+{
+	bool operator==(const IncrementRef&) const = default;
+	
+	std::string reference;
+};
+
 struct Decrement
 {
 	bool operator==(const Decrement&) const = default;
 	
 	uint8_t value;
+};
+
+struct DecrementRef
+{
+	bool operator==(const DecrementRef&) const = default;
+	
+	std::string reference;
+};
+
+struct ResetCase
+{
+	bool operator==(const ResetCase&) const = default;
 };
 
 struct DefineReference
@@ -84,11 +117,16 @@ struct GoToLabel
 	std::string identifier;
 };
 
+struct Rewind
+{
+	bool operator==(const Rewind&) const = default;
+	
+	std::string identifier;
+};
+
 struct IfCurrentValueDifferent0
 {
 	bool operator==(const IfCurrentValueDifferent0&) const = default;
-	
-
 };
 
 struct IfCurrentValueEqualsN
@@ -96,6 +134,13 @@ struct IfCurrentValueEqualsN
 	bool operator==(const IfCurrentValueEqualsN&) const = default;
 	
 	uint8_t value;
+};
+
+struct IfCurrentValueEqualsNRef
+{
+	bool operator==(const IfCurrentValueEqualsNRef&) const = default;
+	
+	std::string reference;
 };
 
 struct IfCursorIsAtReference
@@ -115,15 +160,11 @@ struct IfReferenceExists
 struct GetChar
 {
 	bool operator==(const GetChar&) const = default;
-	
-
 };
 
 struct PutChar
 {
 	bool operator==(const PutChar&) const = default;
-	
-
 };
 
 } // namespace instructions
@@ -131,15 +172,22 @@ using Instruction =
 	std::variant
 		<
 			instructions::MoveRight,
+			instructions::MoveRightRef,
 			instructions::MoveLeft,
+			instructions::MoveLeftRef,
 			instructions::Increment,
+			instructions::IncrementRef,
 			instructions::Decrement,
+			instructions::DecrementRef,
+			instructions::ResetCase,
 			instructions::DefineReference,
 			instructions::UndefineReference,
 			instructions::MoveToReference,
 			instructions::GoToLabel,
+			instructions::Rewind,
 			instructions::IfCurrentValueDifferent0,
 			instructions::IfCurrentValueEqualsN,
+			instructions::IfCurrentValueEqualsNRef,
 			instructions::IfCursorIsAtReference,
 			instructions::IfReferenceExists,
 			instructions::GetChar,

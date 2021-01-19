@@ -23,6 +23,16 @@ class Interpreter
 			_vm.run();
 		}
 
+		void enable_get_char()
+		{
+			_vm.enable_get_char();
+		}
+
+		void disable_get_char()
+		{
+			_vm.disable_get_char();
+		}
+
 	private:
 		Parser _parser;
 		vm::VirtualMachine _vm;
