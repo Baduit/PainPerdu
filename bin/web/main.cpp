@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 			catch (std::exception& e)
 			{
 				nlohmann::json answer_body;
-				answer_body["error"] = e.what();
+				answer_body["out"] = std::string("Error : ") + e.what();
 				res.set_content(answer_body.dump(), "application/json");
 			}
 		});
