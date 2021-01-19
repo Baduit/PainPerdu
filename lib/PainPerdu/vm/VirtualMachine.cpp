@@ -64,12 +64,14 @@ void VirtualMachine::run()
 					//logger[LogCategory::VM].debug("Move right");
 					if (_memory.advance_cursor(current_instruction.value))
 						_references["__end__"] = _memory.get_stack_size();
+					_references["__here__"] = _memory.get_cursor_position();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::MoveLeft, T>)
 				{
 					//logger[LogCategory::VM].debug("Move left");
 					_memory.move_back_cursor(current_instruction.value);
+					_references["__here__"] = _memory.get_cursor_position();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::Increment, T>)
@@ -103,6 +105,7 @@ void VirtualMachine::run()
 					//logger[LogCategory::VM].debug("Move to reference");
 					// No need to check, because if there is a reference, it already exists
 					_memory.move_cursor_to_no_check(_references[current_instruction.identifier]);
+					_references["__here__"] = _memory.get_cursor_position();
 					_step += 1;
 				}
 				else if constexpr (std::same_as<instructions::GoToLabel, T>)
