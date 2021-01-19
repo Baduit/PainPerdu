@@ -123,7 +123,6 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::MoveToReference, T>)
 				{
-					// No need to check, because if there is a reference, it already exists
 					_memory.move_cursor_to_no_check(get_reference(current_instruction.identifier));
 					_references["__here__"] = _memory.get_cursor_position();
 					_step += 1;
