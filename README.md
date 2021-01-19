@@ -73,13 +73,14 @@ In this table :
 | .id            | undefine a reference id, the machine crash if the reference does not exist
 | @id            | move the cursor to the reference id, the machine crash if the reference does not exist
 | *id            | move the step to the label id, the next instruction executed will be the instruction pointed by the label, the machine crash if the label does not exist
+| &id            | move the step at the location the step was the last time *id was called the machine crash if the label does not exist or if *id was never called
 | ?              | the next instruction is executed only if the case at the cursor is not equal to 0
 | ?n             | the next instruction is executed only if the case at the cursor by is equal to n (n must be between 0 and 255 included)
 | ?id            | the next instruction is executed only if the case at the cursor by is equal to n where n is value at the case pointed the reference id
 | !id            | the next instruction is executed if the cursor is not at the reference id, the machine crash if the label does not exist
+| $id            | the next instruction is executed if the reference id exists
 | [              | read 1 byte from the standard input and set the case at the cursor to the read value
 | ]              | write the case at the cursor in the standard output
-| $id            | the next instruction is executed if the reference id exists
 
 ### System references
 | identifier          | description
