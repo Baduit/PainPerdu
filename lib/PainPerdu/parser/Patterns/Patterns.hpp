@@ -33,6 +33,23 @@ struct MoveRight
 	}
 };
 
+struct MoveRightRef
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator(">"), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto word = std::get<crepuscule::Word>(*(begin + 1));
+		state.emplace_instruction<instructions::MoveRightRef>(std::string(word.value));
+		return begin + 2;
+	}
+};
+
 struct MoveLeft
 {
 	template <typename It>
@@ -46,6 +63,23 @@ struct MoveLeft
 	{
 		auto integer = std::get<crepuscule::Integer>(*(begin + 1));
 		state.emplace_instruction<instructions::MoveLeft>(static_cast<std::size_t>(integer.value));
+		return begin + 2;
+	}
+};
+
+struct MoveLeftRef
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("<"), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto word = std::get<crepuscule::Word>(*(begin + 1));
+		state.emplace_instruction<instructions::MoveLeftRef>(std::string(word.value));
 		return begin + 2;
 	}
 };
@@ -69,6 +103,23 @@ struct Increment
 	}
 };
 
+struct IncrementRef
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("+"), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto word = std::get<crepuscule::Word>(*(begin + 1));
+		state.emplace_instruction<instructions::IncrementRef>(std::string(word.value));
+		return begin + 2;
+	}
+};
+
 struct Decrement
 {
 	template <typename It>
@@ -84,6 +135,23 @@ struct Decrement
 		if (integer.value < 0 || integer.value > 255)
 			throw ParseException(integer.line, "Instruction + must be followed by an integer between 0 and 255 included");
 		state.emplace_instruction<instructions::Decrement>(integer.value);
+		return begin + 2;
+	}
+};
+
+struct DecrementRef
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("-"), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto word = std::get<crepuscule::Word>(*(begin + 1));
+		state.emplace_instruction<instructions::DecrementRef>(std::string(word.value));
 		return begin + 2;
 	}
 };
@@ -197,6 +265,23 @@ struct IfCurrentValueEqualsN
 	}
 };
 
+struct IfCurrentValueEqualsNRef
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("?"), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto word = std::get<crepuscule::Word>(*(begin + 1));
+		state.emplace_instruction<instructions::IfCurrentValueEqualsNRef>(std::string(word.value));
+		return begin + 2;
+	}
+};
+
 struct IfCurrentValueDifferent0
 {
 	template <typename It>
@@ -287,15 +372,20 @@ using Patterns =
 	brigand::list
 		<
 			patterns::MoveRight,
+			patterns::MoveRightRef,
 			patterns::MoveLeft,
+			patterns::MoveLeftRef,
 			patterns::Increment,
+			patterns::IncrementRef,
 			patterns::Decrement,
+			patterns::DecrementRef,
 			patterns::DefineReference,
 			patterns::UndefineReference,
 			patterns::MoveToReference,
 			patterns::DefineLabel,
 			patterns::GoToLabel,
 			patterns::IfCurrentValueEqualsN, // this one must absoluterly be before "IfCurrentValueDifferent0"
+			patterns::IfCurrentValueEqualsNRef, // this one must absoluterly be before "IfCurrentValueDifferent0"
 			patterns::IfCurrentValueDifferent0,
 			patterns::IfCursorIsAtReference,
 			patterns::IfReferenceExists,
