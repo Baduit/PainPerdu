@@ -108,6 +108,12 @@ void VirtualMachine::run()
 					_references["__last_modified__"] = _memory.get_cursor_position();
 					_step += 1;
 				}
+				else if constexpr (std::same_as<instructions::ResetCase, T>)
+				{
+					_memory.reset_current_case();
+					_references["__last_modified__"] = _memory.get_cursor_position();
+					_step += 1;
+				}
 				else if constexpr (std::same_as<instructions::DefineReference, T>)
 				{
 					_references[current_instruction.identifier] = _memory.get_cursor_position();

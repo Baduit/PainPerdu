@@ -24,6 +24,7 @@ class Memory
 
 		void incr_current_case(uint8_t n);
 		void decr_current_case(uint8_t n);
+		void reset_current_case();
 
 		uint8_t get_current_case() const;
 		void set_current_case(uint8_t n);

@@ -84,6 +84,11 @@ struct DecrementRef
 	std::string reference;
 };
 
+struct ResetCase
+{
+	bool operator==(const ResetCase&) const = default;
+};
+
 struct DefineReference
 {
 	bool operator==(const DefineReference&) const = default;
@@ -115,8 +120,6 @@ struct GoToLabel
 struct IfCurrentValueDifferent0
 {
 	bool operator==(const IfCurrentValueDifferent0&) const = default;
-	
-
 };
 
 struct IfCurrentValueEqualsN
@@ -150,15 +153,11 @@ struct IfReferenceExists
 struct GetChar
 {
 	bool operator==(const GetChar&) const = default;
-	
-
 };
 
 struct PutChar
 {
 	bool operator==(const PutChar&) const = default;
-	
-
 };
 
 } // namespace instructions
@@ -173,6 +172,7 @@ using Instruction =
 			instructions::IncrementRef,
 			instructions::Decrement,
 			instructions::DecrementRef,
+			instructions::ResetCase,
 			instructions::DefineReference,
 			instructions::UndefineReference,
 			instructions::MoveToReference,

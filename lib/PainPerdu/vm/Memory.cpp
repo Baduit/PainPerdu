@@ -50,6 +50,11 @@ void Memory::decr_current_case(uint8_t n)
 	_stack[_cursor] -= n;
 }
 
+void Memory::reset_current_case()
+{
+	_stack[_cursor] = 0;
+}
+
 uint8_t Memory::get_current_case() const
 {
 	return _stack[_cursor];
