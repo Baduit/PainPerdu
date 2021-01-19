@@ -117,6 +117,13 @@ struct GoToLabel
 	std::string identifier;
 };
 
+struct Rewind
+{
+	bool operator==(const Rewind&) const = default;
+	
+	std::string identifier;
+};
+
 struct IfCurrentValueDifferent0
 {
 	bool operator==(const IfCurrentValueDifferent0&) const = default;
@@ -177,6 +184,7 @@ using Instruction =
 			instructions::UndefineReference,
 			instructions::MoveToReference,
 			instructions::GoToLabel,
+			instructions::Rewind,
 			instructions::IfCurrentValueDifferent0,
 			instructions::IfCurrentValueEqualsN,
 			instructions::IfCurrentValueEqualsNRef,

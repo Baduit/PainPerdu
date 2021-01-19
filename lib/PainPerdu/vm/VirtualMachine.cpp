@@ -136,8 +136,15 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::GoToLabel, T>)
 				{
+					_labels_rewind[current_instruction.identifier] = _step;
 					_step = get_label(current_instruction.identifier);
-					
+				}
+				else if constexpr (std::same_as<instructions::Rewind, T>)
+				{
+					if (auto it = _labels_rewind.find(current_instruction.identifier); it != _labels_rewind.end())
+						_step = it->second;
+					else
+						throw std::runtime_error("Can't rewind with the identifier : '" + current_instruction.identifier + "'.");
 				}
 				else if constexpr (std::same_as<instructions::IfCurrentValueDifferent0, T>)
 				{

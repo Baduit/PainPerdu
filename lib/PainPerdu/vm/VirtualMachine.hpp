@@ -42,6 +42,7 @@ class VirtualMachine
 
 		std::map<std::string, std::size_t> _references;
 		std::map<std::string, std::size_t> _labels;
+		std::map<std::string, std::size_t> _labels_rewind;
 
 		bool _get_char_enabled = true;
 };

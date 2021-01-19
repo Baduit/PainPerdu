@@ -262,6 +262,24 @@ struct GoToLabel
 	}
 };
 
+struct Rewind
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator("&"), AnyWord{});
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto identifier = std::get<crepuscule::Word>(*(begin + 1));
+		// todo check identifier does not contain any forbidden character
+		state.emplace_instruction<instructions::Rewind>(std::string(identifier.value));
+		return begin + 2;
+	}
+};
+
 struct IfCurrentValueEqualsN
 {
 	template <typename It>
@@ -401,6 +419,7 @@ using Patterns =
 			patterns::MoveToReference,
 			patterns::DefineLabel,
 			patterns::GoToLabel,
+			patterns::Rewind,
 			patterns::IfCurrentValueEqualsN, // this one must absoluterly be before "IfCurrentValueDifferent0"
 			patterns::IfCurrentValueEqualsNRef, // this one must absoluterly be before "IfCurrentValueDifferent0"
 			patterns::IfCurrentValueDifferent0,
