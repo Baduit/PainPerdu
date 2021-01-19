@@ -106,11 +106,17 @@ Definitions Parser::operator()(std::string_view input)
 
 Definitions Parser::operator()(std::string&& input)
 {
-		using namespace crepuscule;
+	using namespace crepuscule;
 
 	Definitions defs;
 	Result tokenize_result = _tokeniser(input);
 	Expression& main_expression = tokenize_result.expression;
+
+	std::erase_if(main_expression.value,
+		[&](const auto& token)
+		{
+			return std::holds_alternative<Comment>(token);
+		});
 
 	ParsingState state(defs);
 	auto it = main_expression.value.begin();
