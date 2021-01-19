@@ -142,7 +142,7 @@ void VirtualMachine::run()
 				else if constexpr (std::same_as<instructions::Rewind, T>)
 				{
 					if (auto it = _labels_rewind.find(current_instruction.identifier); it != _labels_rewind.end())
-						_step = it->second;
+						_step = it->second + 1;
 					else
 						throw std::runtime_error("Can't rewind with the identifier : '" + current_instruction.identifier + "'.");
 				}
