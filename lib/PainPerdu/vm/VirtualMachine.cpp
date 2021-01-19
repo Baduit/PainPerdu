@@ -23,6 +23,7 @@ VirtualMachine::VirtualMachine(std::istream& in, std::ostream& out):
 {
 	_labels["__start__"] = 0;
 	_references["__begin__"] = 0;
+	_references["__here__"] = 0;
 }
 
 void VirtualMachine::compile(Definitions definitions)

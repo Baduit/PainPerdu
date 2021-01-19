@@ -195,10 +195,24 @@ void hello_print()
 	expect(out.str() == "Hello World!\n");
 }
 
+void new_operators()
+{
+	std::string_view code = "+50 +__here__ ] ; +50 +__here__ ] >1 +100 ?__begin__]";
+
+	std::stringstream in;
+	std::stringstream out;
+
+	PainPerdu::Interpreter interpreter(in, out);
+	interpreter.compile_and_run(code);
+	
+	expect(out.str() == "ddd");
+}
+
 int main()
 {
 	"hello_world_one_case"_test = hello_world_one_case;
 	"hello_world_multiple_cases"_test = hello_world_multiple_cases;
 	"hello_world_labels"_test = hello_world_labels;
 	"hello_print"_test = hello_print;
+	"new_operators"_test = new_operators;
 }

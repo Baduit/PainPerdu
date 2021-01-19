@@ -156,6 +156,22 @@ struct DecrementRef
 	}
 };
 
+struct ResetCase
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, Operator(";"));
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		state.emplace_instruction<instructions::ResetCase>();
+		return begin + 1;
+	}
+};
+
 struct DefineReference
 {
 	template <typename It>
@@ -379,6 +395,7 @@ using Patterns =
 			patterns::IncrementRef,
 			patterns::Decrement,
 			patterns::DecrementRef,
+			patterns::ResetCase,
 			patterns::DefineReference,
 			patterns::UndefineReference,
 			patterns::MoveToReference,
