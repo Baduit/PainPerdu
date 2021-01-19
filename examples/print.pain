@@ -12,9 +12,14 @@
 >1 +33  
 >1 +10 
 >1 #this_is_to_add_a_backslash_zero
-@__begin__
 
-*print
+>1 #nb_iteration +10
+:main_loop
+@__begin__ *print
+@nb_iteration -1
+?*main_loop
+
+
 
 { Add a little safety so this code is not called implicitly}
 *print_skip
