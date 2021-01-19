@@ -26,6 +26,12 @@ class VirtualMachine
 		void disable_get_char();
 
 	private:
+		std::size_t get_label(const std::string& identifier) const;
+		std::size_t get_reference(const std::string& identifier) const;
+
+		uint8_t get_value_at_reference(const std::string& identifier) const;
+
+	private:
 		std::istream& _in;
 		std::ostream& _out;
 		Definitions _definitions;

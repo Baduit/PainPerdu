@@ -32,6 +32,8 @@ class Memory
 
 		void debug_dump_memory() const;
 
+		const std::vector<uint8_t>& get_stack() const;
+
 	private:
 		bool resize_if_needed();
 

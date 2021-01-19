@@ -84,6 +84,11 @@ void Memory::debug_dump_memory() const
 	}
 }
 
+const std::vector<uint8_t>& Memory::get_stack() const
+{
+	return _stack;
+}
+
 } // namespace vm
 
 
