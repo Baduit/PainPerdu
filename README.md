@@ -88,7 +88,7 @@ In this table :
 | \_\_begin__         | 1st case of the machine
 | \_\_end__           | last case already accessed by the machine
 | \_\_last_modified__ | last case modified by the machine
-| \_\_cursor__        | reference at the current position of the cursor
+| \_\_here__        | reference at the current position of the cursor
 
 ### System labels
 | identifier          | description
