@@ -161,6 +161,8 @@ void VirtualMachine::run()
 				else if constexpr (std::same_as<instructions::GetChar, T>)
 				{
 					//logger[LogCategory::VM].debug("Get char");
+					if (!_get_char_enabled)
+						throw std::runtime_error("Get char instruction has been disabled.");
 					// todo check _in state
 					uint8_t c = 0;
 					_in >> c;
@@ -191,6 +193,17 @@ Definitions VirtualMachine::optimize(Definitions&& definitions)
 	// Do not forget to update the labels's index
 	return definitions;
 }
+
+void VirtualMachine::enable_get_char()
+{
+	_get_char_enabled = true;
+}
+
+void VirtualMachine::disable_get_char()
+{
+	_get_char_enabled = false;
+}
+
 
 } // namespace vm
 

@@ -45,6 +45,7 @@ crepuscule::Config create_config()
 	conf.operators.emplace_back("]");
 	conf.operators.emplace_back("$");
 	conf.operators.emplace_back(".");
+	conf.operators.emplace_back(";");
 
 	conf.integer_reader =
 		[](std::string_view str) -> std::optional<int>

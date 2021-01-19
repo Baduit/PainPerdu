@@ -13,16 +13,26 @@ int main(int argc, char** argv)
 	server.Post("/execute",
 		[&](const httplib::Request& req, httplib::Response& res)
 		{
-			std::stringstream out;
-			std::stringstream in;
-			PainPerdu::Interpreter interpreter(in, out);
+			try
+			{
+				std::stringstream out;
+				std::stringstream in;
+				PainPerdu::Interpreter interpreter(in, out);
+				interpreter.disable_get_char();
 
-			interpreter.compile_and_run(std::move(req.body));
+				interpreter.compile_and_run(std::move(req.body));
 
-			nlohmann::json answer_body;
-			answer_body["out"] = out.str();
-			res.set_content(answer_body.dump(), "application/json");
-			//res.set_header("Access-Control-Allow-Origin", "*");
+				nlohmann::json answer_body;
+				answer_body["out"] = out.str();
+				res.set_content(answer_body.dump(), "application/json");
+				//res.set_header("Access-Control-Allow-Origin", "*");
+			}
+			catch (std::exception& e)
+			{
+				nlohmann::json answer_body;
+				answer_body["error"] = e.what();
+				res.set_content(answer_body.dump(), "application/json");
+			}
 		});
 
 	server.set_error_handler([]([[maybe_unused]] const auto& req, auto& res) {

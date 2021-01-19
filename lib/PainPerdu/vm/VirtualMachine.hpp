@@ -22,6 +22,9 @@ class VirtualMachine
 
 		Definitions optimize(Definitions&& definitions);
 
+		void enable_get_char();
+		void disable_get_char();
+
 	private:
 		std::istream& _in;
 		std::ostream& _out;
@@ -33,6 +36,8 @@ class VirtualMachine
 
 		std::map<std::string, std::size_t> _references;
 		std::map<std::string, std::size_t> _labels;
+
+		bool _get_char_enabled = true;
 };
 
 } // namespace vm
