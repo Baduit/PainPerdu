@@ -13,6 +13,8 @@ int main(int argc, char** argv)
 	server.Post("/execute",
 		[&](const httplib::Request& req, httplib::Response& res)
 		{
+			nlohmann::json answer_body;
+
 			try
 			{
 				std::stringstream out;
@@ -22,17 +24,17 @@ int main(int argc, char** argv)
 
 				interpreter.compile_and_run(std::move(req.body));
 
-				nlohmann::json answer_body;
 				answer_body["out"] = out.str();
-				res.set_content(answer_body.dump(), "application/json");
-				//res.set_header("Access-Control-Allow-Origin", "*");
+				answer_body["stack"] = interpreter.get_stack();
 			}
 			catch (std::exception& e)
 			{
-				nlohmann::json answer_body;
 				answer_body["out"] = std::string("Error : ") + e.what();
-				res.set_content(answer_body.dump(), "application/json");
+				answer_body["stack"] = std::vector<uint8_t>{};	
 			}
+
+			res.set_content(answer_body.dump(), "application/json");
+			res.set_header("Access-Control-Allow-Origin", "*");
 		});
 
 	server.set_error_handler([]([[maybe_unused]] const auto& req, auto& res) {
@@ -40,6 +42,7 @@ int main(int argc, char** argv)
 			char buf[BUFSIZ];
 			snprintf(buf, sizeof(buf), fmt, res.status);
 			res.set_content(buf, "text/html");
+			res.set_header("Access-Control-Allow-Origin", "*");
 		});
 
 	auto mount_point = (argc > 1) ? argv[1] : "../public";

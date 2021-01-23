@@ -33,6 +33,11 @@ class Interpreter
 			_vm.disable_get_char();
 		}
 
+		const std::vector<uint8_t>& get_stack() const
+		{
+			return _vm.get_stack();
+		}
+
 	private:
 		Parser _parser;
 		vm::VirtualMachine _vm;

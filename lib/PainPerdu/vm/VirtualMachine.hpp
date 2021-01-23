@@ -25,6 +25,8 @@ class VirtualMachine
 		void enable_get_char();
 		void disable_get_char();
 
+		const std::vector<uint8_t>& get_stack() const;
+
 	private:
 		std::size_t get_label(const std::string& identifier) const;
 		std::size_t get_reference(const std::string& identifier) const;
