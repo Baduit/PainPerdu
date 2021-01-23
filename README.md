@@ -1,6 +1,6 @@
 # Pain Perdu
 ## Description
-This is a stack based esoteric language I created for fun.
+This is an esoteric language I created for fun.
 
 Here a little hello world example:
 ```C
