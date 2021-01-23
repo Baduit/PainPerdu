@@ -225,6 +225,11 @@ void VirtualMachine::disable_get_char()
 	_get_char_enabled = false;
 }
 
+const std::vector<uint8_t>& VirtualMachine::get_stack() const
+{
+	return _memory.get_stack();
+}
+
 std::size_t VirtualMachine::get_label(const std::string& identifier) const
 {
 	auto it = _labels.find(identifier); 

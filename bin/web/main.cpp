@@ -24,6 +24,7 @@ int main(int argc, char** argv)
 
 				nlohmann::json answer_body;
 				answer_body["out"] = out.str();
+				answer_body["stack"] = interpreter.get_stack();
 				res.set_content(answer_body.dump(), "application/json");
 				//res.set_header("Access-Control-Allow-Origin", "*");
 			}
@@ -31,6 +32,7 @@ int main(int argc, char** argv)
 			{
 				nlohmann::json answer_body;
 				answer_body["out"] = std::string("Error : ") + e.what();
+				answer_body["stack"] = std::vector<uint8_t>{};
 				res.set_content(answer_body.dump(), "application/json");
 			}
 		});
