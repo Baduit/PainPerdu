@@ -1,8 +1,8 @@
 # Pain Perdu
 ## Description
-This is a stack based esoteric langage I create for fun.
+This is a stack based esoteric language I create for fun.
 
-Here a little hello world example :
+Here a little hello world example:
 ```C
 +72] +29] +7]] +3] -79] +55] +24] +3] -6] -8] -67] -23]
 ```
@@ -30,15 +30,15 @@ The __recipe__ is the list of instruction of the machine.
 
 The __step__ represents the actual position of the machine in the recipe.
 
-The machine execute the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step.
+The machine executes the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step.
 
 An __indentifier__ is a list of alphanumeric or underscore characters representing the name of a label or a reference. Identifiers beginning with 2 underscores are reserved. 
 
-A __label__ is a reference to a position in the recipe, it can be created an annotation. If you try to use a label but the label does not exist the machine must stop.
+A __label__ is a reference to a position in the recipe, it can be created an annotation. If you try to use a label but the label does not exist, the machine must stop.
 
 A __reference__ is a location to a case, it can be created with an instruction. If you try to use a reference but the reference is not defined the machine must stop.
 
-> The same identifier can be used for a reference and a label
+> The same identifier can be used for a reference and a label.
 
 When the machine ends it will return the value of the last modified case.
 
@@ -47,21 +47,21 @@ It is possible to add space, tabulations or new line between the instructions or
 ### Comments
 Comments are all the characters between { }.
 
-There are no way to escape theses characters, anyway there is no other context where the characters '{' and '}' are valids.
+There is no way to escape these characters, anyway there is no other context where the characters '{' and '}' are valid.
 
 ### Annotations
-In this table :
-* __id__ represents an identifier
+In this table:
+* __id__ represents an identifier.
 
 | Symbols        | action 
 | -------------- | -------------
-| :id            | define a label id pointed to the step next step, it can not override an existing label, if there is not instruction after the annotion, it points to the end of the program and moving the step to this label cause the end of the program
+| :id            | define a label id pointed to the step next step, it cannot override an existing label, if there is not instruction after the annotation, it points to the end of the program and moving the step to this label cause the end of the program
 
 
 ### Instructions
-In this table :
-* __n__ represents a positive integer
-* __id__ represents an identifier
+In this table 
+* __n__ represents a positive integer.
+* __id__ represents an identifier.
 
 | Symbols        | action 
 | -------------- | -------------
@@ -118,12 +118,44 @@ A simple hello world example
 >1 +10  ]
 ```
 
-## Try it online
+A more advance example that print hello world 10 times:
+```
++72     
+>1 +101 
+>1 +108 
+>1 +108 
+>1 +111 
+>1 +32  
+>1 +87  
+>1 +111 
+>1 +114 
+>1 +108 
+>1 +100 
+>1 +33  
+>1 +10 
+>1 #this_is_to_add_a_backslash_zero
+
+>1 #nb_iteration +10
+:main_loop
+@__begin__ *print
+@nb_iteration -1
+?*main_loop
+
+{ Add a little safety so this code is not called implicitly}
+*print_skip
+:print
+:print_impl { If we are not at a \0 it we go to putchar } ?*print_putchar { Else go to the end } *print_end
+:print_putchar { Print the character then move in the stack to the right then go back at print_impl} ]>1 *print_impl
+:print_end { Rewind where print was called } &print
+:print_skip
+```
+
+## Try it online!
 You can try it online [here](https://painperdu.baduit.eu/) with the online editor. 
 
-You can note that there are a difference between the online version and the local version: the instruction '[' to read a character is not implemented.
+You can note that there is a difference between the online version and the local version: the instruction '[' to read a character is not implemented.
 
-But there is an exlusive feature ! There is a canvas. The 1st pixel use the value of 1st case of the stack for the color red, the 2nd for its color green and the 3rd for the blue. It works the same way for every pixel.
+But there is an exclusive  feature! There is a canvas. The 1st pixel uses the value of 1st case of the stack for the color red, the 2nd for its color green and the 3rd for the blue and so on.
 
 ## Interpreter
 ### Build instructions
@@ -131,7 +163,7 @@ It requires a recent version of cmake and a compiler supporting C++20.
 
 All dependencies are either directly included in the repo or included as a submodule.
 
-It uses :
+It uses:
 - [Rang](https://github.com/Baduit/PainPerdu/tree/master/lib/external/Rang) a simple library to have color for my (very basics) logs
 - [Brigand](https://github.com/edouarda/brigand) a metaprogrammation library
 - [Crepuscule](https://github.com/Baduit/Crepuscule) my own tokenizer library
@@ -140,7 +172,7 @@ It uses :
 - 
 
 
-The web version also uses :
+The web version also uses:
 - [nlohmann json] (https://github.com/nlohmann/json) do I really need to present it ?
 - [cpp-httplib](https://github.com/yhirose/cpp-httplib) a very simple http library in 1 header or 1 header and 1 source file.
 - [ut](https://github.com/boost-ext/ut) a single header macro free unit test framework
@@ -153,4 +185,4 @@ The name of the interpreter is 'ppb' (Pain Perdu Baker).
 `./ppb filename` will read the file and interpret it.
 
 ## Why "PainPerdu" ?
-I like to name stuff with a good bakery name. The Pain Perdu (also known as 'French toast' or 'Eggy Bread') is a very old, easy to do and very good bakery. Also it exists (sometimes with slight variations) in a lot of country.
+I like to name stuff with a good bakery name. The Pain Perdu (also known as 'French toast' or 'Eggy Bread') is a very old, easy to do and very good bakery. Also, it exists (sometimes with slight variations) in a lot of country.
