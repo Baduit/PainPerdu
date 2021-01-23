@@ -18,6 +18,30 @@ function resize_canvas() {
 	return false;
 }
 
+function render_stack_on_canvas(canvas, stack) {
+	var canvas_context = canvas.getContext("2d");
+	var i = 0;
+	for (var y = 0; y < canvas.height; ++y)
+	{
+		for (var x = 0; x < canvas.width; ++x)
+		{
+			var red_pos_in_stack = i;
+			var green_pos_in_stack = red_pos_in_stack + 1
+			var blue_pos_in_stack = green_pos_in_stack + 1;
+			if (blue_pos_in_stack >= stack.length) {
+				break;
+			} else {
+				// Maybe I should check the value are between 0 and 255, but I use a vector<uint8_t> on the backend and i'm kinda lazy
+				// The line below is ugly :/
+				var pixel_color = "rgb(" + stack[red_pos_in_stack].toString() + ", " + stack[green_pos_in_stack].toString() + ", " + stack[blue_pos_in_stack].toString() + ")";
+				canvas_context.fillStyle = pixel_color;
+				canvas_context.fillRect(x, y, 1, 1)
+			}
+			i += 3;
+		}
+	}
+}
+
 function ask_nicely_the_api_to_run_the_code() {
 	const options = {
 		method: 'POST',
@@ -42,6 +66,7 @@ function ask_nicely_the_api_to_run_the_code() {
 			const answer = JSON.parse(myText);
 
 			document.getElementById("yololOutput").value = answer.out;
+			render_stack_on_canvas(canvas, answer.stack);
 		})
 		.catch(function (error) {
 			console.log("Error: " + error);
