@@ -50,7 +50,9 @@ function ask_nicely_the_api_to_run_the_code() {
 			'Content-Type': 'text/plain'
 		}
 	}
-	fetch("http://127.0.0.1:6574/execute", options)
+	//let url = "http://127.0.0.1:6574";
+	let url = "https://painperdu.baduit.eu";
+	fetch(url + "/execute", options)
 		.then(function (response) {
 			return response.text();
 		})
