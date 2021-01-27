@@ -1,6 +1,6 @@
 # Pain Perdu
 ## Description
-This is a stack based esoteric language I create for fun.
+This is an esoteric language I created for fun.
 
 Here a little hello world example:
 ```C
@@ -169,11 +169,10 @@ It uses:
 - [Crepuscule](https://github.com/Baduit/Crepuscule) my own tokenizer library
 - [MagicEnum](https://github.com/Neargye/magic_enum) cool library allowing to have reflection with enums
 - [nameof](https://github.com/Neargye/nameof) usefull library
-- 
 
 
 The web version also uses:
-- [nlohmann json] (https://github.com/nlohmann/json) do I really need to present it ?
+- [nlohmann json](https://github.com/nlohmann/json) do I really need to present it ?
 - [cpp-httplib](https://github.com/yhirose/cpp-httplib) a very simple http library in 1 header or 1 header and 1 source file.
 - [ut](https://github.com/boost-ext/ut) a single header macro free unit test framework
 
