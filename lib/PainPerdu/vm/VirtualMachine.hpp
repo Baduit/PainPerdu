@@ -22,8 +22,8 @@ class VirtualMachine
 
 		Definitions optimize(Definitions&& definitions);
 
-		void enable_get_char();
-		void disable_get_char();
+		void enable_input();
+		void disable_input();
 
 		const std::vector<uint8_t>& get_stack() const;
 
@@ -46,7 +46,7 @@ class VirtualMachine
 		std::map<std::string, std::size_t> _labels;
 		std::map<std::string, std::size_t> _labels_rewind;
 
-		bool _get_char_enabled = true;
+		bool _input_enabled = true;
 };
 
 } // namespace vm

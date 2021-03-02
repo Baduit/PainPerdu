@@ -23,14 +23,14 @@ class Interpreter
 			_vm.run();
 		}
 
-		void enable_get_char()
+		void enable_input()
 		{
-			_vm.enable_get_char();
+			_vm.enable_input();
 		}
 
-		void disable_get_char()
+		void disable_input()
 		{
-			_vm.disable_get_char();
+			_vm.disable_input();
 		}
 
 		const std::vector<uint8_t>& get_stack() const

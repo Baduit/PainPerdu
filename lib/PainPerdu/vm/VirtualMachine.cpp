@@ -202,7 +202,7 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::GetChar, T>)
 				{
-					if (!_get_char_enabled)
+					if (!_input_enabled)
 						throw std::runtime_error("Get char instruction has been disabled.");
 					// todo check _in state
 					uint8_t c = 0;
@@ -219,6 +219,8 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::ReadFile, T>)
 				{
+					if (!_input_enabled)
+						throw std::runtime_error("Read file instruction has been disabled.");
 					std::string str = readAllContent(current_instruction.filename);
 					if (!str.empty())
 					{
@@ -247,14 +249,14 @@ Definitions VirtualMachine::optimize(Definitions&& definitions)
 	return definitions;
 }
 
-void VirtualMachine::enable_get_char()
+void VirtualMachine::enable_input()
 {
-	_get_char_enabled = true;
+	_input_enabled = true;
 }
 
-void VirtualMachine::disable_get_char()
+void VirtualMachine::disable_input()
 {
-	_get_char_enabled = false;
+	_input_enabled = false;
 }
 
 const std::vector<uint8_t>& VirtualMachine::get_stack() const

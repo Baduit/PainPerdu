@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 				std::stringstream out;
 				std::stringstream in;
 				PainPerdu::Interpreter interpreter(in, out);
-				interpreter.disable_get_char();
+				interpreter.disable_input();
 
 				interpreter.compile_and_run(std::move(req.body));
 

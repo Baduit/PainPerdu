@@ -1,4 +1,6 @@
+"toto.txt" >1 ;
 
+*print
 
 { Add a little safety so this code is not called implicitly}
 *print_skip
