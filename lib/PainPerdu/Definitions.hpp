@@ -167,6 +167,13 @@ struct PutChar
 	bool operator==(const PutChar&) const = default;
 };
 
+struct ReadFile
+{
+	bool operator==(const ReadFile&) const = default;
+
+	std::string filename;
+};
+
 } // namespace instructions
 using Instruction =
 	std::variant
@@ -191,7 +198,8 @@ using Instruction =
 			instructions::IfCursorIsAtReference,
 			instructions::IfReferenceExists,
 			instructions::GetChar,
-			instructions::PutChar
+			instructions::PutChar,
+			instructions::ReadFile
 		>;
 
 struct Definitions

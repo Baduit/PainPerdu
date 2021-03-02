@@ -1,4 +1,7 @@
 #include <concepts>
+#include <fstream>
+#include <iostream>
+#include <filesystem>
 
 #include <PainPerdu/vm/VirtualMachine.hpp>
 #include <PainPerdu/misc/Log.hpp>
@@ -7,6 +10,22 @@ namespace
 {
 
 template<class> inline constexpr bool always_false_v = false;
+
+std::string		readAllContent(std::string_view filename)
+{
+	namespace fs = std::filesystem;
+
+	std::ifstream	file(filename.data(), std::ios::binary);
+	if (!file)
+		throw std::runtime_error("Invalid file");
+
+	auto file_size = fs::file_size(filename);
+
+	std::string file_content;
+	file_content.resize(file_size);
+	file.read(file_content.data(), static_cast<std::streamsize>(file_size));
+	return file_content;
+}
 
 } // namespace
 
@@ -196,6 +215,19 @@ void VirtualMachine::run()
 				{
 					// todo check _out state
 					_out << _memory.get_current_case();
+					_step += 1;
+				}
+				else if constexpr (std::same_as<instructions::ReadFile, T>)
+				{
+					std::string str = readAllContent(current_instruction.filename);
+					if (!str.empty())
+					{
+						if (_memory.write_data(str))
+							_references["__end__"] = _memory.get_stack_size();
+						_references["__here__"] = _memory.get_cursor_position();
+						_references["__last_modified__"] = _memory.get_cursor_position();
+					}
+
 					_step += 1;
 				}
 				else

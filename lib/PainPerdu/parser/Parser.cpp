@@ -27,6 +27,8 @@ crepuscule::Config create_config()
 
 	conf.comment_delimiters.emplace_back("{", "}");
 
+	conf.string_delimiters.emplace_back("\"", "\"");
+
 	conf.delimiters.emplace_back(" ");
 	conf.delimiters.emplace_back("\t");
 	conf.delimiters.emplace_back("\n");

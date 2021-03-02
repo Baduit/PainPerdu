@@ -86,6 +86,7 @@ In this table
 | $id            | the next instruction is executed if the reference id exists
 | [              | read 1 byte from the standard input and set the case at the cursor to the read value
 | ]              | write the case at the cursor in the standard output
+| "filename"     | read the file located at filename and write it in the stack at the cursor and then place the cursor at the last written byte
 
 ### System references
 | identifier          | description

@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include <PainPerdu/vm/Memory.hpp>
 #include <PainPerdu/misc/Log.hpp>
 
@@ -53,6 +55,15 @@ void Memory::decr_current_case(uint8_t n)
 void Memory::reset_current_case()
 {
 	_stack[_cursor] = 0;
+}
+
+bool Memory::write_data(const std::string& data)
+{
+	auto old_cursor = _cursor;
+	_cursor += data.size();
+	auto resized = resize_if_needed();
+	std::memcpy(_stack.data() + old_cursor, data.data(), data.size());
+	return resized;
 }
 
 uint8_t Memory::get_current_case() const

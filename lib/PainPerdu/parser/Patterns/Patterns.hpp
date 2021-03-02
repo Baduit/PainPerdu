@@ -400,6 +400,23 @@ struct PutChar
 	}
 };
 
+struct ReadFile
+{
+	template <typename It>
+	static bool match(It begin, It end, const ParsingState&)
+	{
+		return helper::match(begin, end, String("\"", "\""));
+	}
+
+	template <typename It>
+	static It action(It begin, It, ParsingState& state)
+	{
+		auto filename = std::get<crepuscule::String>(*begin);
+		state.emplace_instruction<instructions::ReadFile>(filename.value);
+		return begin + 1;
+	}
+};
+
 } // namespace patterns
 
 using Patterns =

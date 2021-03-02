@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
 
 namespace PainPerdu
 {
@@ -25,6 +26,8 @@ class Memory
 		void incr_current_case(uint8_t n);
 		void decr_current_case(uint8_t n);
 		void reset_current_case();
+
+		bool write_data(const std::string& data);
 
 		uint8_t get_current_case() const;
 		void set_current_case(uint8_t n);

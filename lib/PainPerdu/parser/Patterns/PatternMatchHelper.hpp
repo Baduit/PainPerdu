@@ -19,6 +19,30 @@ struct AnyWord
 	}
 };
 
+struct AnyString
+{
+	bool operator==(const crepuscule::Token& token)
+	{
+		return std::holds_alternative<crepuscule::String>(token);
+	}
+};
+
+struct String
+{
+	String(std::string b, std::string e):
+		begin(b), end(e) // RVO
+	{}
+
+	bool operator==(const crepuscule::Token& token)
+	{
+		auto* str = std::get_if<crepuscule::String>(&token);
+		return (str && str->delimiter.begin == begin && str->delimiter.end == end);
+	}
+
+	std::string begin;
+	std::string end;
+};
+
 struct AnyInteger
 {
 	bool operator==(const crepuscule::Token& token)
