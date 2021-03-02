@@ -443,7 +443,8 @@ using Patterns =
 			patterns::IfCursorIsAtReference,
 			patterns::IfReferenceExists,
 			patterns::GetChar,
-			patterns::PutChar
+			patterns::PutChar,
+			patterns::ReadFile
 		>;
 
 } // namespace parser

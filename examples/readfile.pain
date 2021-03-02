@@ -1,6 +1,10 @@
-"toto.txt" >1 ;
+{ read a file named toto.txt }
+"toto.txt"
+{ Add a \0 }
+>1
 
-*print
+{ Place the cursor at the beginning and print the content}
+@__begin__ *print
 
 { Add a little safety so this code is not called implicitly}
 *print_skip
