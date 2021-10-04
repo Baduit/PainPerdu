@@ -5,12 +5,9 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#if defined(__cpp_modules)
-export module boost.ut;
-export import std;
-#else
+
 #pragma once
-#endif
+
 
 #if defined(_MSC_VER)
 #include <ciso646>  // and, or, not
@@ -65,13 +62,9 @@ export import std;
 #include <exception>
 #endif
 
-#if defined(__cpp_modules)
-export namespace boost::inline ext::ut {
-#else
 namespace boost {
 inline namespace ext {
 namespace ut {
-#endif
 
 inline namespace v1_1_8 {
 namespace utility {
