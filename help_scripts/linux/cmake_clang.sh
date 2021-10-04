@@ -1,0 +1,1 @@
+cmake -G 'Unix Makefiles' -D CMAKE_C_COMPILER=clang-$1 -D CMAKE_CXX_COMPILER=clang++-$1 ..

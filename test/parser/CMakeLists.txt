@@ -1,0 +1,1 @@
+addTest(parser_test parser.cpp)

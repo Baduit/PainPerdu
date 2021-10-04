@@ -1,0 +1,31 @@
++72     
+>1 +101 
+>1 +108 
+>1 +108 
+>1 +111 
+>1 +32  
+>1 +87  
+>1 +111 
+>1 +114 
+>1 +108 
+>1 +100 
+>1 +33  
+>1 +10 
+>1 #this_is_to_add_a_backslash_zero
+
+>1 #nb_iteration +10
+:main_loop
+@__begin__ *print
+@nb_iteration -1
+?*main_loop
+
+
+
+{ Add a little safety so this code is not called implicitly}
+*print_skip
+:print
+:print_impl { If we are not at a \0 it we go to putchar } ?*print_putchar { Else go to the end } *print_end
+:print_putchar { Print the character then move in the stack to the right then go back at print_impl} ]>1 *print_impl
+:print_end { Rewind where print was called } &print
+:print_skip
+

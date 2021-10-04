@@ -1,0 +1,1 @@
+cmake -G 'Unix Makefiles' -D CMAKE_C_COMPILER=gcc-$1 -D CMAKE_CXX_COMPILER=g++-$1 ..
