@@ -1,13 +1,13 @@
 set(SRCS
     ./PainPerdu/PainPerdu.cpp
     ./PainPerdu/parser/Parser.cpp
+    ./PainPerdu/parser_v2/Parser.cpp
     ./PainPerdu/vm/VirtualMachine.cpp
     ./PainPerdu/vm/Memory.cpp)
 
 add_subdirectory(external/crepuscule/lib)
 
-#find_package(pegtl CONFIG REQUIRED)
-#target_link_libraries(main PRIVATE taocpp::pegtl)
+find_package(pegtl CONFIG REQUIRED)
 find_package(nameof CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 find_path(BRIGAND_INCLUDE_DIRS "brigand/adapted.hpp")
@@ -20,4 +20,4 @@ target_compile_options(PainPerdu
                        $<$<CXX_COMPILER_ID:MSVC>:/W3 /permissive- /TP>
                        $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3>)
 target_include_directories(PainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR} ${BRIGAND_INCLUDE_DIRS} ${RANG_INCLUDE_DIRS})
-target_link_libraries(PainPerdu PUBLIC crepuscule nameof::nameof magic_enum::magic_enum)
+target_link_libraries(PainPerdu PUBLIC crepuscule nameof::nameof magic_enum::magic_enum taocpp::pegtl)

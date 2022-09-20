@@ -32,7 +32,7 @@ The __step__ represents the actual position of the machine in the recipe.
 
 The machine executes the instruction at the step then advance the step until it reachs the end of the recipe. Some instructions may change the position of the step.
 
-An __indentifier__ is a list of alphanumeric or underscore characters representing the name of a label or a reference. Identifiers beginning with 2 underscores are reserved. 
+An __indentifier__ iAn identifier is an arbitrarily long sequence of digits, underscores, lowercase and uppercase Latin letters. A valid identifier must begin with a non-digit character. It represents the name of a label or a reference. Identifiers beginning with 2 underscores are reserved. 
 
 A __label__ is a reference to a position in the recipe, it can be created an annotation. If you try to use a label but the label does not exist, the machine must stop.
 
@@ -86,7 +86,7 @@ In this table
 | $id            | the next instruction is executed if the reference id exists
 | [              | read 1 byte from the standard input and set the case at the cursor to the read value
 | ]              | write the case at the cursor in the standard output
-| "filename"     | read the file located at filename and write it in the stack at the cursor and then place the cursor at the last written byte
+| "filename"     | read the file located at filename and write it in the stack at the cursor and then place the cursor at the last written byte (no character escapable)
 
 ### System references
 | identifier          | description
@@ -160,9 +160,7 @@ But there is an exclusive  feature! There is a canvas. The 1st pixel uses the va
 
 ## Interpreter
 ### Build instructions
-It requires a recent version of cmake and a compiler supporting C++20.
-
-All dependencies are either directly included in the repo or included as a submodule.
+It requires a recent version of cmake, a compiler supporting C++20 and vcpkg for depencies.
 
 It uses:
 - [Rang](https://github.com/Baduit/PainPerdu/tree/master/lib/external/Rang) a simple library to have color for my (very basics) logs
@@ -175,6 +173,8 @@ It uses:
 The web version also uses:
 - [nlohmann json](https://github.com/nlohmann/json) do I really need to present it ?
 - [cpp-httplib](https://github.com/yhirose/cpp-httplib) a very simple http library in 1 header or 1 header and 1 source file.
+
+For the tests :
 - [ut](https://github.com/boost-ext/ut) a single header macro free unit test framework
 
 ### Usage

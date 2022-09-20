@@ -1,5 +1,6 @@
 {
 	"files.associations": {
+		"*.pain": "log",
 		"functional": "cpp",
 		"type_traits": "cpp",
 		"xlocnum": "cpp",
@@ -77,6 +78,21 @@
 		"csignal": "cpp",
 		"forward_list": "cpp",
 		"numeric": "cpp",
-		"valarray": "cpp"
+		"valarray": "cpp",
+		"execution": "cpp",
+		"any": "cpp",
+		"bit": "cpp",
+		"bitset": "cpp",
+		"charconv": "cpp",
+		"complex": "cpp",
+		"deque": "cpp",
+		"format": "cpp",
+		"memory_resource": "cpp",
+		"queue": "cpp",
+		"set": "cpp",
+		"source_location": "cpp",
+		"stack": "cpp",
+		"stop_token": "cpp",
+		"typeindex": "cpp"
 	}
 }
