@@ -1,8 +1,8 @@
 #include <iostream>
 #include <sstream>
 
-#include <external/httplib.h>
-#include <external/json/json.hpp>
+#include <httplib.h>
+#include <nlohmann/json.hpp>
 
 #include <PainPerdu/PainPerdu.hpp>
 

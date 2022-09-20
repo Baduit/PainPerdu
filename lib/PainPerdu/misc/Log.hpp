@@ -4,9 +4,9 @@
 #include <string>
 #include <iostream>
 
-#include <external/Rang/Rang.hpp>
-#include <external/magic_enum/magic_enum.hpp>
-#include <external/nameof/nameof.hpp>
+#include <Rang.hpp>
+#include <magic_enum.hpp>
+#include <nameof.hpp>
 
 enum class LogCategory
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <external/brigand/brigand.hpp>
+#include <brigand/brigand.hpp>
 
 #include <PainPerdu/Definitions.hpp>
 #include <PainPerdu/parser/ParseException.hpp>

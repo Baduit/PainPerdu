@@ -1,0 +1,17 @@
+{
+	"name": "pain-perdu",
+	"version": "0.0.1",
+	"maintainers": [
+		"Baduit <lena.bertho@protonmail.com>"
+	],
+	"description": "Implementation of an exotic and esoteric programming language named pain perdu",
+	"dependencies": [
+		"pegtl",
+		"nlohmann-json",
+		"nameof",
+		"cpp-httplib",
+		"brigand",
+		"magic-enum",
+		"rang"
+	]
+}
