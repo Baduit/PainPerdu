@@ -14,7 +14,7 @@ jobs:
         submodules: recursive
     
     - name: vcpkg init
-      run: git clone https://github.com/microsoft/vcpkg && cd vcpkg && ./vcpkg/bootstrap-vcpkg.sh && cd ..
+      run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
 
     - name: Build project
       env:
