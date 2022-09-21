@@ -10,7 +10,6 @@
 		"nlohmann-json",
 		"nameof",
 		"cpp-httplib",
-		"brigand",
 		"magic-enum",
 		"rang"
 	]
