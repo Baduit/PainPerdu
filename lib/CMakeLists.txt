@@ -1,7 +1,6 @@
 set(SRCS
     ./PainPerdu/PainPerdu.cpp
     ./PainPerdu/parser/Parser.cpp
-    ./PainPerdu/parser_v2/Parser.cpp
     ./PainPerdu/vm/VirtualMachine.cpp
     ./PainPerdu/vm/Memory.cpp)
 

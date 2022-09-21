@@ -1,1 +1,0 @@
-addTest(pattern_matcher_test pattern_matcher.cpp)

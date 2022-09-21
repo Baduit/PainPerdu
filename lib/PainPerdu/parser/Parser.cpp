@@ -1,15 +1,10 @@
-#include <concepts>
-#include <iostream>
-#include <ranges>
-#include <sstream>
+#include <charconv>
 
-#include <crepuscule/TokenPrinter.hpp>
+#include <tao/pegtl.hpp>
+#include <tao/pegtl/contrib/parse_tree.hpp>
+#include <tao/pegtl/contrib/parse_tree_to_dot.hpp>
 
 #include <PainPerdu/parser/Parser.hpp>
-#include <PainPerdu/parser/ParseException.hpp>
-#include <PainPerdu/parser/ParsingState.hpp>
-#include <PainPerdu/parser/Patterns/Patterns.hpp>
-#include <PainPerdu/misc/Log.hpp>
 
 namespace PainPerdu
 {
@@ -17,135 +12,232 @@ namespace PainPerdu
 namespace parser
 {
 
+template<class> inline constexpr bool always_false_v = false;	
 
-namespace
+namespace pegtl = tao::pegtl;
+
+struct AlphaAndUnderscore : pegtl::sor<pegtl::alpha, pegtl::one<'_'>>{};
+struct AlphaNumAndUnderscore: pegtl::sor<pegtl::alnum, pegtl::one<'_'>>{};
+
+struct Identifier : pegtl::seq<AlphaAndUnderscore, pegtl::opt<pegtl::plus<AlphaNumAndUnderscore>>> {};
+struct Integer : pegtl::plus<pegtl::digit> {};
+
+struct DefineLabel : pegtl::seq<pegtl::one<':'>, Identifier>  {};
+struct MoveRight : pegtl::seq<pegtl::one<'>'>, pegtl::sor<Integer, Identifier>> {};
+struct MoveLeft : pegtl::seq<pegtl::one<'<'>, pegtl::sor<Integer, Identifier>> {};
+struct Increment : pegtl::seq<pegtl::one<'+'>, pegtl::sor<Integer, Identifier>> {};
+struct Decrement : pegtl::seq<pegtl::one<'-'>, pegtl::sor<Integer, Identifier>> {};
+struct ResetCase : pegtl::one<';'> {};
+struct DefineReference : pegtl::seq<pegtl::one<'#'>, Identifier>  {};
+struct UndefineReference : pegtl::seq<pegtl::one<'.'>, Identifier> {};
+struct MoveToReference : pegtl::seq<pegtl::one<'@'>, Identifier>  {};
+struct GoToLabel : pegtl::seq<pegtl::one<'*'>, Identifier>  {};
+struct Rewind : pegtl::seq<pegtl::one<'&'>, Identifier> {};
+struct IfCurrentValueDifferent : pegtl::seq<pegtl::one<'?'>, pegtl::opt<pegtl::sor<Integer, Identifier>>> {};
+struct IfCursorIsAtReference : pegtl::seq<pegtl::one<'!'>, Identifier> {};
+struct IfReferenceExists : pegtl::seq<pegtl::one<'$'>, Identifier> {};
+struct GetChar : pegtl::one<'['> {};
+struct PutChar : pegtl::one<']'> {};
+struct ReadFile : pegtl::if_must<pegtl::one<'"'>, pegtl::until<pegtl::one<'"'>, pegtl::any>> {};
+struct Comment : pegtl::if_must<pegtl::one<'{'>, pegtl::until<pegtl::one<'}'>, pegtl::any>> {};
+struct Skip : pegtl::plus<pegtl::sor<pegtl::blank, pegtl::eol>> {};
+
+struct Expression : 
+	pegtl::sor
+		<
+			DefineLabel,
+			MoveRight,
+			MoveLeft,
+			Increment,
+			Decrement,
+			ResetCase,
+			DefineReference,
+			UndefineReference,
+			MoveToReference,
+			GoToLabel,
+			Rewind,
+			IfCurrentValueDifferent,
+			IfCursorIsAtReference,
+			IfReferenceExists,
+			GetChar,
+			PutChar,
+			ReadFile,
+			Comment,
+			Skip
+		>
+{};
+
+struct Grammar : pegtl::plus<Expression> {};
+
+template<typename Rule>
+using Selector = pegtl::parse_tree::selector
+	<
+		Rule,
+		pegtl::parse_tree::store_content::on
+			<
+				Identifier,
+				Integer,
+				DefineLabel,
+				MoveRight,
+				MoveLeft,
+				Increment,
+				Decrement,
+				ResetCase,
+				DefineReference,
+				UndefineReference,
+				MoveToReference,
+				GoToLabel,
+				Rewind,
+				IfCurrentValueDifferent,
+				IfCursorIsAtReference,
+				IfReferenceExists,
+				GetChar,
+				PutChar,
+				ReadFile
+			>
+	>;
+
+struct Visitor
 {
+	Visitor(Definitions& defs):
+		_defs(defs)
+	{}
 
-crepuscule::Config create_config()
-{
-	crepuscule::Config conf;
-
-	conf.comment_delimiters.emplace_back("{", "}");
-
-	conf.string_delimiters.emplace_back("\"", "\"");
-
-	conf.delimiters.emplace_back(" ");
-	conf.delimiters.emplace_back("\t");
-	conf.delimiters.emplace_back("\n");
-
-	conf.operators.emplace_back(":");
-	conf.operators.emplace_back(">");
-	conf.operators.emplace_back("<");
-	conf.operators.emplace_back("+");
-	conf.operators.emplace_back("-");
-	conf.operators.emplace_back("#");
-	conf.operators.emplace_back("@");
-	conf.operators.emplace_back("*");
-	conf.operators.emplace_back("&");
-	conf.operators.emplace_back("?");
-	conf.operators.emplace_back("!");
-	conf.operators.emplace_back("[");
-	conf.operators.emplace_back("]");
-	conf.operators.emplace_back("$");
-	conf.operators.emplace_back(".");
-	conf.operators.emplace_back(";");
-
-	conf.integer_reader =
-		[](std::string_view str) -> std::optional<int>
+	template <typename InstructionN, typename InstructionId>
+	Instruction do_it_right(const pegtl::parse_tree::node& node)
+	{
+		const auto& child = *(node.children[0]);
+		if (child.is_type<Integer>())
 		{
-			// TODO: improve this, I don't think use a stringstream is ideal
-			for (auto c: str)
-				if (!isdigit(c))
-					return {};
-			std::stringstream ss;
-			ss << str;
-			int result;
-			ss >> result;
-			return result;
-		};
+			decltype(std::declval<InstructionN>().value) n;
+			std::from_chars(child.string_view().data(), child.string_view().data() + child.string_view().size(), n);
 
-	return conf;
-}
-
-template <typename It>
-auto get_line(It begin, It end)
-{
-	return std::find_if(begin, end,
-		[](const auto& token)
+			return InstructionN{ n };
+		}
+		else
 		{
-			if (const auto* endline = std::get_if<crepuscule::Operator>(&token); endline)
-				return endline->value == "\n";
-			else
-				return false;
-		});
-}
+			return InstructionId{ child.string() };
+		}
+	}
 
-std::string token_to_string(const crepuscule::Token& token)
-{
-	std::stringstream ss;
-	std::visit(
-			[&](const auto& t)
+	template <typename InstructionAlone, typename InstructionN, typename InstructionId>
+	Instruction do_it_right(const pegtl::parse_tree::node& node)
+	{
+		if (node.children.empty())
+		{
+			return InstructionAlone{};
+		}
+		else
+		{
+			const auto& child = *(node.children[0]);
+			if (child.is_type<Integer>())
 			{
-				using namespace crepuscule;
-				ss << t;
-			}, token);
-	return ss.str();
-}
+				decltype(std::declval<InstructionN>().value) n;
+				std::from_chars(child.string_view().data(), child.string_view().data() + child.string_view().size(), n);
+				return InstructionN{ n };
+			}
+			else
+			{
+				return InstructionId{ child.string() };
+			}
+		}
+	}
 
-} // namespace
+	void operator()(const pegtl::parse_tree::node* node)
+	{
+		if (!node)
+			return;			
 
+		if (node->is_type<DefineLabel>())
+		{
+			_defs.annotations.push_back(annotations::DefineLabel{ node->children[0]->string(), _defs.recipe.size() });
+		}
+		else if (node->is_type<MoveRight>())
+		{
+			_defs.recipe.push_back(do_it_right<instructions::MoveRight, instructions::MoveRightRef>(*node));
+		}
+		else if (node->is_type<MoveLeft>())
+		{
+			_defs.recipe.push_back(do_it_right<instructions::MoveLeft, instructions::MoveLeftRef>(*node));
+		}
+		else if (node->is_type<Increment>())
+		{
+			_defs.recipe.push_back(do_it_right<instructions::Increment, instructions::IncrementRef>(*node));
+		}
+		else if (node->is_type<Decrement>())
+		{
+			_defs.recipe.push_back(do_it_right<instructions::Decrement, instructions::DecrementRef>(*node));
+		}
+		else if (node->is_type<ResetCase>())
+		{
+			_defs.recipe.push_back(instructions::ResetCase{});
+		}
+		else if (node->is_type<DefineReference>())
+		{
+			_defs.recipe.push_back(instructions::DefineReference{ node->children[0]->string() });
+		}
+		else if (node->is_type<UndefineReference>())
+		{
+			_defs.recipe.push_back(instructions::UndefineReference{ node->children[0]->string() });
+		}
+		else if (node->is_type<MoveToReference>())
+		{
+			_defs.recipe.push_back(instructions::MoveToReference{ node->children[0]->string() });
+		}
+		else if (node->is_type<GoToLabel>())
+		{
+			_defs.recipe.push_back(instructions::GoToLabel{ node->children[0]->string() });
+		}
+		else if (node->is_type<Rewind>())
+		{
+			_defs.recipe.push_back(instructions::Rewind{ node->children[0]->string() });
+		}
+		else if (node->is_type<IfCurrentValueDifferent>())
+		{
+			_defs.recipe.push_back(do_it_right<instructions::IfCurrentValueDifferent0, instructions::IfCurrentValueEqualsN, instructions::IfCurrentValueEqualsNRef>(*node));
+		}
+		else if (node->is_type<IfCursorIsAtReference>())
+		{
+			_defs.recipe.push_back(instructions::IfCursorIsAtReference{ node->children[0]->string() });
+		}
+		else if (node->is_type<IfReferenceExists>())
+		{
+			_defs.recipe.push_back(instructions::IfReferenceExists{ node->children[0]->string() });
+		}
+		else if (node->is_type<GetChar>())
+		{
+			_defs.recipe.push_back(instructions::GetChar{});
+		}
+		else if (node->is_type<PutChar>())
+		{
+			_defs.recipe.push_back(instructions::PutChar{});
+		}
+		else if (node->is_type<ReadFile>())
+		{
+			auto filename = node->string_view();
+			filename.remove_prefix(1);
+			filename.remove_suffix(1);
+			_defs.recipe.push_back(instructions::ReadFile{ std::string(filename) });
+		}
+		else
+		{
+			for (const auto& child: node->children)
+				(*this)(child.get());
+		}
+	}
 
-Parser::Parser():
-	_tokeniser(create_config())
-{
-}
-
+	Definitions& _defs;
+};
 
 Definitions Parser::operator()(std::string_view input)
 {
-	return (*this)(std::string(input));
-}
-
-Definitions Parser::operator()(std::string&& input)
-{
-	using namespace crepuscule;
-
 	Definitions defs;
-	Result tokenize_result = _tokeniser(input);
-	Expression& main_expression = tokenize_result.expression;
 
-	std::erase_if(main_expression.value,
-		[&](const auto& token)
-		{
-			return std::holds_alternative<Comment>(token);
-		});
+	pegtl::memory_input mem_input(input.data(), input.size(), "");
+	const auto root = pegtl::parse_tree::parse<Grammar, Selector>(mem_input);
 
-	ParsingState state(defs);
-	auto it = main_expression.value.begin();
-	auto end = main_expression.value.end();
-	while (it != end)
-	{
-		bool pattern_matched = false;
-		brigand::for_each<Patterns>(
-			[&](auto type)
-			{
-				if (!pattern_matched)
-				{
-					using P = typename decltype(type)::type;
-					if (P::match(it, end, state))
-					{
-						pattern_matched = true;
-						it = P::action(it, end, state);
-					}
-				}
-			});
-
-		if (!pattern_matched)
-		{
-			logger[LogCategory::Parser].error("Invalid code at token : " + token_to_string(*it));
-			break;
-		}
-	}
+	Visitor v(defs);
+	v(root.get());
 
 	return defs;
 }

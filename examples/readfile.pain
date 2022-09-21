@@ -1,5 +1,5 @@
 { read a file named toto.txt }
-"toto.txt"
+"vcpkg.json"
 { Add a \0 }
 >1
 

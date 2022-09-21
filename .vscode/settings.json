@@ -93,6 +93,15 @@
 		"source_location": "cpp",
 		"stack": "cpp",
 		"stop_token": "cpp",
-		"typeindex": "cpp"
+		"typeindex": "cpp",
+		"cstdarg": "cpp",
+		"cwctype": "cpp",
+		"strstream": "cpp",
+		"unordered_set": "cpp",
+		"cfenv": "cpp",
+		"scoped_allocator": "cpp",
+		"*.ipp": "cpp",
+		"coroutine": "cpp",
+		"csetjmp": "cpp"
 	}
 }

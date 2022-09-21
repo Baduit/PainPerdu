@@ -219,6 +219,8 @@ void VirtualMachine::run()
 				}
 				else if constexpr (std::same_as<instructions::ReadFile, T>)
 				{
+					std::cout << "here" << std::endl;
+					std::cout << "current_instruction.filename" << current_instruction.filename << std::endl;
 					if (!_input_enabled)
 						throw std::runtime_error("Read file instruction has been disabled.");
 					std::string str = readAllContent(current_instruction.filename);
