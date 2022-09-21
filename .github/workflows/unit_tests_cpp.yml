@@ -44,7 +44,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake .
+        cmake -DCMAKE_TOOLCHAIN_FILE=D:/a/PainPerdu/PainPerdu/vcpkg/scripts/buildsystems/vcpkg.cmake .
         cmake --build .
 
     - name: Run tests
