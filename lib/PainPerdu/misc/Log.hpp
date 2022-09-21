@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 
-#include <Rang.hpp>
+#include <rang.hpp>
 #include <magic_enum.hpp>
 #include <nameof.hpp>
 
