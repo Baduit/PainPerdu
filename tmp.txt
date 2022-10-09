@@ -1,3 +1,0 @@
-cmake -GNinja -B em_build -DCMAKE_TOOLCHAIN_FILE="$env:HOMEPATH/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=C:\Users\Athlena\Documents\code\emsdk\upstream\emscripten\cmake\Modules\Platform\Emscripten.cmake
-
-cmake -GNinja -B em_build -DCMAKE_TOOLCHAIN_FILE="$env:HOMEPATH/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=C:\Users\Athlena\Documents\code\emsdk\upstream\emscripten\cmake\Modules\Platform\Emscripten.cmake -DEMSCRIPTEN=ON
