@@ -11,32 +11,12 @@ namespace PainPerdu
 class Interpreter
 {
 	public:
-		Interpreter(std::istream& in, std::ostream& out):
-			_parser(),
-			_vm(in, out)
-		{}
+		Interpreter(std::istream& in, std::ostream& out);
 
-
-		void compile_and_run(std::string_view input)
-		{
-			_vm.compile(_parser(input));
-			_vm.run();
-		}
-
-		void enable_input()
-		{
-			_vm.enable_input();
-		}
-
-		void disable_input()
-		{
-			_vm.disable_input();
-		}
-
-		const std::vector<uint8_t>& get_stack() const
-		{
-			return _vm.get_stack();
-		}
+		void compile_and_run(std::string_view input);
+		void enable_input();
+		void disable_input();
+		const std::vector<uint8_t>& get_stack() const;
 
 	private:
 		Parser _parser;
