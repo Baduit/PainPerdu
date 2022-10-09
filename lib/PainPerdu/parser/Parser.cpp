@@ -1,4 +1,5 @@
 #include <charconv>
+#include <format>
 
 #include <tao/pegtl.hpp>
 #include <tao/pegtl/contrib/parse_tree.hpp>
@@ -67,7 +68,9 @@ struct Expression :
 		>
 {};
 
-struct Grammar : pegtl::plus<Expression> {};
+struct SyntaxError : pegtl::if_must<pegtl::any, pegtl::until<Expression>> {};
+
+struct Grammar : pegtl::plus<pegtl::sor<Expression, SyntaxError>> {};
 
 template<typename Rule>
 using Selector = pegtl::parse_tree::selector
@@ -229,12 +232,28 @@ struct Visitor
 	Definitions& _defs;
 };
 
+template<typename Rule>
+struct ParserAction {};
+
+template<>
+struct ParserAction<SyntaxError>
+{
+	template<typename ParseInput>
+	static void apply(const ParseInput& in)
+	{
+		// It does not work on emscripten, I dunno why
+		//throw std::runtime_error(std::format("Error at line = {}, column = {}.\nUnknown symbols : {}",  in.position().line, in.position().column, in.string()));
+		throw std::runtime_error("Error at line = " + std::to_string(in.position().line) + ", column = " + std::to_string(in.position().column) + ".\nUnknown symbols : " + in.string());
+	}
+};
+
+
 Definitions Parser::operator()(std::string_view input)
 {
 	Definitions defs;
 
 	pegtl::memory_input mem_input(input.data(), input.size(), "");
-	const auto root = pegtl::parse_tree::parse<Grammar, Selector>(mem_input);
+	const auto root = pegtl::parse_tree::parse<Grammar, Selector, ParserAction>(mem_input);
 
 	Visitor v(defs);
 	v(root.get());
