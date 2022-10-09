@@ -30,11 +30,25 @@ int main(int argc, char** argv)
 		std::string line;
 		while (std::getline(std::cin, line))
 		{
-			interpreter.compile_and_run(std::move(line));
+			try
+			{
+				interpreter.compile_and_run(std::move(line));
+			}
+			catch (std::exception& e)
+			{
+				std::cout << e.what() << std::endl;
+			}
 		}
 	}
 	else
 	{
-		interpreter.compile_and_run(readAllContent(argv[1]));
+		try
+		{
+			interpreter.compile_and_run(readAllContent(argv[1]));
+		}
+		catch (std::exception& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 }

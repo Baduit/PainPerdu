@@ -3,12 +3,10 @@
         {
             "name": "Win32",
             "includePath": [
-                "${vcpkgRoot}/x64-windows/include",
-                "${vcpkgRoot}/x86-windows/include",
-                "${workspaceFolder}/lib/external/crepuscule/lib",
                 "${workspaceFolder}/lib",
                 "${workspaceFolder}/test",
-                "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.28.29333/include"
+                "C:/Users/Athlena/Documents/code/emsdk/upstream/emscripten/cache/sysroot/include",
+                "${workspaceFolder}/build/vcpkg_installed/x64-windows/include"
             ],
             "defines": [
                 "_DEBUG",

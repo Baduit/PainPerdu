@@ -1,8 +1,8 @@
 set(SRCS
-    ./PainPerdu/PainPerdu.cpp
-    ./PainPerdu/parser/Parser.cpp
-    ./PainPerdu/vm/VirtualMachine.cpp
-    ./PainPerdu/vm/Memory.cpp)
+    ${CMAKE_CURRENT_LIST_DIR}/PainPerdu/PainPerdu.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PainPerdu/parser/Parser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PainPerdu/vm/VirtualMachine.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PainPerdu/vm/Memory.cpp)
 
 find_package(pegtl CONFIG REQUIRED)
 find_package(nameof CONFIG REQUIRED)
@@ -16,4 +16,14 @@ target_compile_options(PainPerdu
                        $<$<CXX_COMPILER_ID:MSVC>:/W3 /permissive- /TP>
                        $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3>)
 target_include_directories(PainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR} ${RANG_INCLUDE_DIRS})
-target_link_libraries(PainPerdu PUBLIC nameof::nameof magic_enum::magic_enum taocpp::pegtl)
+target_link_libraries(PainPerdu PRIVATE nameof::nameof magic_enum::magic_enum taocpp::pegtl)
+
+if (EMSCRIPTEN)
+    add_executable(EmPainPerdu ${CMAKE_CURRENT_LIST_DIR}/EmPainPerdu/EmPainPerdu.cpp)
+    target_compile_features(EmPainPerdu PUBLIC cxx_std_20)
+    target_compile_options(EmPainPerdu PRIVATE -Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3)
+    target_link_options(EmPainPerdu PRIVATE --bind)
+    target_include_directories(EmPainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+    target_link_libraries(EmPainPerdu PRIVATE PainPerdu)
+    set_target_properties(EmPainPerdu PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/../public/generated")
+endif()
