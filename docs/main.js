@@ -50,8 +50,6 @@ function ask_nicely_the_api_to_run_the_code() {
 	var answer = Module.run_pain_perdu_code(document.getElementById("yololInput").value);
 
 	document.getElementById("yololOutput").value = answer.console_output();
-	console.log(answer.stack());
-	console.log(answer.stack().size());
 	render_stack_on_canvas(canvas, answer.stack());
 
 	answer.delete();
