@@ -5,9 +5,6 @@ set(SRCS
     ${CMAKE_CURRENT_LIST_DIR}/PainPerdu/vm/Memory.cpp)
 
 find_package(pegtl CONFIG REQUIRED)
-find_package(nameof CONFIG REQUIRED)
-find_package(magic_enum CONFIG REQUIRED)
-find_path(RANG_INCLUDE_DIRS "rang.hpp")
 
 add_library(PainPerdu ${SRCS})
 target_compile_features(PainPerdu PUBLIC cxx_std_20)
@@ -15,8 +12,8 @@ target_compile_options(PainPerdu
                        PRIVATE
                        $<$<CXX_COMPILER_ID:MSVC>:/W3 /permissive- /TP>
                        $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3>)
-target_include_directories(PainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR} ${RANG_INCLUDE_DIRS})
-target_link_libraries(PainPerdu PRIVATE nameof::nameof magic_enum::magic_enum taocpp::pegtl)
+target_include_directories(PainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(PainPerdu PRIVATE taocpp::pegtl)
 
 if (EMSCRIPTEN)
 set(FORCE_EXCEPTION_FLAG "-fwasm-exceptions")
