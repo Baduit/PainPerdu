@@ -19,11 +19,13 @@ target_include_directories(PainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR} ${RANG_INC
 target_link_libraries(PainPerdu PRIVATE nameof::nameof magic_enum::magic_enum taocpp::pegtl)
 
 if (EMSCRIPTEN)
+set(FORCE_EXCEPTION_FLAG "-fwasm-exceptions")
+
     add_executable(EmPainPerdu ${CMAKE_CURRENT_LIST_DIR}/EmPainPerdu/EmPainPerdu.cpp)
     target_compile_features(EmPainPerdu PUBLIC cxx_std_20)
-    target_compile_options(EmPainPerdu PRIVATE -Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3)
-    target_link_options(EmPainPerdu PRIVATE --bind)
+    target_compile_options(EmPainPerdu PRIVATE -Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3 ${FORCE_EXCEPTION_FLAG})
+    target_link_options(EmPainPerdu PRIVATE --bind ${FORCE_EXCEPTION_FLAG})
     target_include_directories(EmPainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR})
     target_link_libraries(EmPainPerdu PRIVATE PainPerdu)
-    set_target_properties(EmPainPerdu PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/../public/generated")
+    set_target_properties(EmPainPerdu PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/../docs/generated")
 endif()
