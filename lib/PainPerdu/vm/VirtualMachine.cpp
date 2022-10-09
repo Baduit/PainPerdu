@@ -4,7 +4,6 @@
 #include <filesystem>
 
 #include <PainPerdu/vm/VirtualMachine.hpp>
-#include <PainPerdu/misc/Log.hpp>
 
 namespace
 {

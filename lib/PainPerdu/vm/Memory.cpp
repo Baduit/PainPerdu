@@ -1,7 +1,6 @@
 #include <cstring>
 
 #include <PainPerdu/vm/Memory.hpp>
-#include <PainPerdu/misc/Log.hpp>
 
 namespace PainPerdu
 {
@@ -89,15 +88,6 @@ bool Memory::resize_if_needed()
 std::size_t Memory::get_stack_size() const
 {
 	return _stack.size();
-}
-
-void Memory::debug_dump_memory() const
-{
-	for (int i = 0; auto c: _stack)
-	{
-		logger[LogCategory::VM].debug("Case nb : ", i, " has a value of : ", static_cast<int>(c));
-		++i;
-	}
 }
 
 const std::vector<uint8_t>& Memory::get_stack() const
