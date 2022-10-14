@@ -47,7 +47,7 @@ jobs:
 
     - name: Build project
       run: |
-        source ./emsdk_env.sh
+        source ./emsdk/emsdk_env.sh
         ls ./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
         cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DEMSCRIPTEN=ON .
         cmake --build .
