@@ -42,6 +42,8 @@ jobs:
         source ./emsdk_env.sh
         cd ..
 
+    - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
     
     - name: vcpkg init
       run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
