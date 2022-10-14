@@ -6,6 +6,7 @@
 	],
 	"description": "Implementation of an exotic and esoteric programming language named pain perdu",
 	"dependencies": [
-		"pegtl"
+		"pegtl",
+		"doctest"
 	]
 }

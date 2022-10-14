@@ -1,1 +1,0 @@
-C'ets bien beau d'avoir un nouveau parser, mais meuf, tu fais aucune gestion d'erreur lol

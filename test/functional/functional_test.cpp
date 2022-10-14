@@ -1,13 +1,11 @@
-#include <sstream>
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <doctest/doctest.h>
 
-#include <boost_ut/ut.hpp>
+#include <sstream>
 
 #include <PainPerdu/PainPerdu.hpp>
 
-using namespace boost::ut;
-
-
-void hello_world_one_case()
+TEST_CASE("hello_world_one_case")
 {
 	std::string_view code = "+72] +29] +7]] +3] -79] +55] +24] +3] -6] -8] -67] -23]";
 
@@ -17,10 +15,10 @@ void hello_world_one_case()
 	PainPerdu::Interpreter interpreter(in, out);
 	interpreter.compile_and_run(code);
 	
-	expect(out.str() == "Hello World!\n");
+	CHECK(out.str() == "Hello World!\n");
 }
 
-void hello_world_multiple_cases()
+TEST_CASE("hello_world_multiple_cases")
 {
 	std::string_view code =
 		"+72     ]"
@@ -42,10 +40,10 @@ void hello_world_multiple_cases()
 	PainPerdu::Interpreter interpreter(in, out);
 	interpreter.compile_and_run(code);
 	
-	expect(out.str() == "Hello World!\n");
+	CHECK(out.str() == "Hello World!\n");
 }
 
-void hello_world_labels()
+TEST_CASE("hello_world_labels")
 {
 	std::string_view code =
 		"#end_of_string"
@@ -154,10 +152,10 @@ void hello_world_labels()
 	PainPerdu::Interpreter interpreter(in, out);
 	interpreter.compile_and_run(code);
 	
-	expect(out.str() == "Hello World!\n");
+	CHECK(out.str() == "Hello World!\n");
 }
 
-void hello_print()
+TEST_CASE("hello_print")
 {
 	std::string_view code =
 		"+72     "
@@ -192,10 +190,10 @@ void hello_print()
 	PainPerdu::Interpreter interpreter(in, out);
 	interpreter.compile_and_run(code);
 	
-	expect(out.str() == "Hello World!\n");
+	CHECK(out.str() == "Hello World!\n");
 }
 
-void new_operators()
+TEST_CASE("new_operators")
 {
 	std::string_view code = "+50 +__here__ ] ; +50 +__here__ ] >1 +100 ?__begin__]";
 
@@ -205,14 +203,5 @@ void new_operators()
 	PainPerdu::Interpreter interpreter(in, out);
 	interpreter.compile_and_run(code);
 	
-	expect(out.str() == "ddd");
-}
-
-int main()
-{
-	"hello_world_one_case"_test = hello_world_one_case;
-	"hello_world_multiple_cases"_test = hello_world_multiple_cases;
-	"hello_world_labels"_test = hello_world_labels;
-	"hello_print"_test = hello_print;
-	"new_operators"_test = new_operators;
+	CHECK(out.str() == "ddd");
 }
