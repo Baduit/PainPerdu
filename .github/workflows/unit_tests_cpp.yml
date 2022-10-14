@@ -10,8 +10,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
     
     - name: vcpkg init
       run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
@@ -27,6 +25,37 @@ jobs:
     - name: Run tests
       run: ctest
 
+  build_emscripten:
+    name: Build Emscripten
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install emsdk
+      run: |
+        git clone https://github.com/emscripten-core/emsdk.git
+        cd emsdk
+        ./emsdk install latest
+        ./emsdk activate latest
+        source ./emsdk_env.sh
+        cd ..
+
+    
+    - name: vcpkg init
+      run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
+
+      run: |
+        cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake .
+        cmake -GNinja -B em_build -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DEMSCRIPTEN=ON
+        cmake --build .
+
+    - name: Run tests
+      run: |
+        node --experimental-wasm-eh  ./test/parser/parser_test_test.js
+        node --experimental-wasm-eh  ./test/functional/functional_test_test.js
+
   build_windows:
     name: Build Windows
     runs-on: windows-latest
@@ -34,8 +63,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
     
     - name: vcpkg init
       run: |
