@@ -41,9 +41,6 @@ jobs:
         ./emsdk activate latest
         source ./emsdk_env.sh
         cd ..
-
-    - name: Setup Ninja
-        uses: ashutoshvarma/setup-ninja@master
     
     - name: vcpkg init
       run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
@@ -51,7 +48,7 @@ jobs:
     - name: Build project
       run: |
         cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake .
-        cmake -GNinja -B em_build -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DEMSCRIPTEN=ON
+        cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DEMSCRIPTEN=ON .
         cmake --build .
 
     - name: Run tests
