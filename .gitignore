@@ -31,6 +31,9 @@
 *.out
 *.app
 
+# Emscripten output
+website/generated
+
 # Build dirs
 build
 build_msvc
