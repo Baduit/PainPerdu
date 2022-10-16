@@ -5,16 +5,26 @@ project(PainPerduProject VERSION 1.3.0 DESCRIPTION "An example")
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(EMSCRIPTEN "EMSCRIPTEN" OFF)
+option(CHEERP "CHEERP" OFF)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(lib)
 
 if (EMSCRIPTEN)
-    set(EM_PP_OUTPUT_DIR "${CMAKE_CURRENT_LIST_DIR}/public/generated")
+    add_subdirectory(bin/EmPainPerdu)
+elseif(CHEERP)
+    add_subdirectory(bin/CheerpPainPerdu)
 else()
-    add_subdirectory(bin)                    
+    add_subdirectory(bin/interpreter)                    
 endif()                        
 
-include(CTest)
-include(addTest)
-enable_testing(MAKE_DIRECTORY test)
-add_subdirectory(test)
+
+if (NOT CHEERP)
+    include(CTest)
+    include(addTest)
+    enable_testing(MAKE_DIRECTORY test)
+    add_subdirectory(test)
+endif()

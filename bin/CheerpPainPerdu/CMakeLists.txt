@@ -1,0 +1,5 @@
+add_executable(CheerpPainPerdu CheerpPainPerdu.cpp)
+target_compile_options(CheerpPainPerdu PRIVATE -Wextra -Wall -Wsign-conversion -Wfloat-equal -pedantic -Wredundant-decls -Wshadow -Wpointer-arith -O3 -fexceptions)
+target_include_directories(CheerpPainPerdu PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(CheerpPainPerdu PRIVATE PainPerdu)
+set_target_properties(CheerpPainPerdu PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/../../website/generated")

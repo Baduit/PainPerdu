@@ -1,6 +1,5 @@
 # ppb = PainPerdu Baker
 add_executable(ppb main.cpp)
-target_compile_features(ppb PRIVATE cxx_std_20)
 target_compile_options(ppb
                        PRIVATE
                        $<$<CXX_COMPILER_ID:MSVC>:/W3 /permissive- /TP>
