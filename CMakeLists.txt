@@ -15,8 +15,6 @@ add_subdirectory(lib)
 
 if (EMSCRIPTEN)
     add_subdirectory(bin/EmPainPerdu)
-elseif(CHEERP)
-    add_subdirectory(bin/CheerpPainPerdu)
 else()
     add_subdirectory(bin/interpreter)                    
 endif()                        

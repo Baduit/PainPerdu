@@ -1,7 +1,5 @@
 if (EMSCRIPTEN)
 	set(FORCE_EXCEPTION_FLAG "-fwasm-exceptions")
-elseif(CHEERP)
-	set(FORCE_EXCEPTION_FLAG "-fexceptions")
 else()
 	set(FORCE_EXCEPTION_FLAG "")
 endif()
