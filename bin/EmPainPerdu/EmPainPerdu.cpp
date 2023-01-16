@@ -1,5 +1,4 @@
 #include <sstream>
-#include <map>
 
 #include <emscripten/bind.h>
 
