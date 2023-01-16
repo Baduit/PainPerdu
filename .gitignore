@@ -48,3 +48,8 @@ em_build
 cheerp_build
 
 tmp.txt
+
+out
+node_modules
+.vscode-test/
+*.vsix
