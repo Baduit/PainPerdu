@@ -73,14 +73,14 @@ TEST_CASE("token_basic")
 	PainPerdu::Parser parser;
 	auto tokens = parser.get_tokens(code);
 	REQUIRE(tokens.size() == 8);
-	CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .lenght = 1});
-	CHECK(tokens[1] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 2, .lenght = 1});
-	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 4, .lenght = 1});
-	CHECK(tokens[3] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 5, .lenght = 1});
-	CHECK(tokens[4] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 6, .lenght = 1});
-	CHECK(tokens[5] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 7, .lenght = 3});
-	CHECK(tokens[6] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 11, .lenght = 1});
-	CHECK(tokens[7] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 12, .lenght = 1});
+	CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	CHECK(tokens[1] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 2, .length = 1});
+	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 4, .length = 1});
+	CHECK(tokens[3] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 5, .length = 1});
+	CHECK(tokens[4] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 6, .length = 1});
+	CHECK(tokens[5] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 7, .length = 3});
+	CHECK(tokens[6] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 11, .length = 1});
+	CHECK(tokens[7] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 12, .length = 1});
 }
 
 TEST_CASE("token_basic")
@@ -94,8 +94,8 @@ TEST_CASE("token_basic")
 	PainPerdu::Parser parser;
 	auto tokens = parser.get_tokens(code);
 	REQUIRE(tokens.size() == 4);
-	CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .lenght = 1});
-	CHECK(tokens[1] == Token{.type = Token::Type::LABEL,    .line = 1, .start_column = 2, .lenght = 5});
-	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 3, .start_column = 1, .lenght = 1});
-	CHECK(tokens[3] == Token{.type = Token::Type::VARIABLE, .line = 3, .start_column = 2, .lenght = 3});
+	CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	CHECK(tokens[1] == Token{.type = Token::Type::LABEL,    .line = 1, .start_column = 2, .length = 5});
+	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 3, .start_column = 1, .length = 1});
+	CHECK(tokens[3] == Token{.type = Token::Type::VARIABLE, .line = 3, .start_column = 2, .length = 3});
 }

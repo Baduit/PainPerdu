@@ -60,7 +60,7 @@ struct TreeToTokenAction {};
                     .type = TokenType,                                                \
                     .line = in.position().line,                                       \
                     .start_column = in.position().column,                             \
-                    .lenght = in.size()                                               \
+                    .length = in.size()                                               \
                 });                                                                   \
             state.next_identifier_type = IdentifierType;                              \
         }                                                                             \
@@ -101,7 +101,7 @@ struct TreeToTokenAction<Identifier>
                     .type = get_token_type(state.next_identifier_type),
                     .line = in.position().line,
                     .start_column = in.position().column,
-                    .lenght = in.size()
+                    .length = in.size()
                 });
             state.next_identifier_type = TreeToTokenState::NextIdentifierType::NONE;
         }

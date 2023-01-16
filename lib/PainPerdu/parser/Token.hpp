@@ -22,27 +22,18 @@ struct Token
 		OPERATOR = 5
 	};
 
-    static constexpr std::string_view TYPE_STRINGS[] =
-        {
-            "variable",
-            "label",
-            "comment",
-            "string",
-            "number",
-            "operator",
-        };
-
-    std::size_t to_index(Type type)
-    {
-        return static_cast<std::size_t>(type);
-    }
-
     bool operator==(const Token&) const = default;
 
 	Type type;
 	std::size_t line;
 	std::size_t start_column;
-	std::size_t lenght;
+	std::size_t length;
+
+	// Getter for the bindings
+	Type get_type() const { return type; }
+	std::size_t get_line() const { return line; }
+	std::size_t get_start_column() const { return start_column; }
+	std::size_t get_length() const { return length; }
 };
 
 

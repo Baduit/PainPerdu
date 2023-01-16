@@ -14,6 +14,7 @@ add_subdirectory(lib)
 
 if (EMSCRIPTEN)
     add_subdirectory(bin/EmPainPerdu)
+    add_subdirectory(bin/ExtentionBindings)
 else()
     add_subdirectory(bin/interpreter)                    
 endif()                        
