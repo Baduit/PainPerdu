@@ -8,32 +8,33 @@ namespace PainPerdu::parser
 
 struct Token
 {
-    // There will be some bindings,
-    // that'w why I prefer having a specified type
-	enum class Type: std::size_t
+	// Enum totally bugged so I'm making a struct with constante to simulate it
+	// And also string type because this will be used in javascript as string values
+	struct Type
 	{
-        // I know that I don't need to specify the value
-        // But in this case I prefer to be specific
-		VARIABLE = 0,
-		LABEL = 1,
-		COMMENT = 2,
-		STRING = 3,
-		NUMBER = 4,
-		OPERATOR = 5
+		// The variable name correspond to its PainPerdu meaning
+		// The variable value correspond to how I want to color it in vscode
+		inline static std::string VARIABLE = "variable";
+		inline static std::string LABEL = "function";
+		inline static std::string COMMENT = "comment";
+		inline static std::string STRING = "string";
+		inline static std::string NUMBER = "number";
+		inline static std::string OPERATOR = "operator";
 	};
 
     bool operator==(const Token&) const = default;
 
-	Type type;
+	std::string_view type;
 	std::size_t line;
 	std::size_t start_column;
 	std::size_t length;
 
 	// Getter for the bindings
-	Type get_type() const { return type; }
+	std::string get_type() const { return std::string(type); } // string because embind does not seem to support view :/
 	std::size_t get_line() const { return line; }
 	std::size_t get_start_column() const { return start_column; }
 	std::size_t get_length() const { return length; }
+
 };
 
 

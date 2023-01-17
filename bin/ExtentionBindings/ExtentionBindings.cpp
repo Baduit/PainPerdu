@@ -7,7 +7,7 @@
 
 using namespace emscripten;
 
-static std::vector<std::string> TOKEN_TYPE_STRINGS =
+/* static std::vector<std::string> TOKEN_TYPE_STRINGS =
     {
         "variable",
         "label",
@@ -20,18 +20,23 @@ static std::vector<std::string> TOKEN_TYPE_STRINGS =
 std::size_t to_index(PainPerdu::parser::Token::Type type)
 {
     return static_cast<std::size_t>(type);
-}
+} */
 
 std::vector<PainPerdu::parser::Token> get_tokens(const std::string& input)
 {
     return PainPerdu::Parser().get_tokens(input);
 }
 
+/* std::string token_type_to_string(PainPerdu::parser::Token::Type type)
+{
+    return TOKEN_TYPE_STRINGS[to_index(type)];
+} */
+
 EMSCRIPTEN_BINDINGS(PainPerduParserModule) {
     register_vector<std::string>("VectorString");
-    constant("TOKEN_TYPE_STRINGS", TOKEN_TYPE_STRINGS);
+    //constant("TOKEN_TYPE_STRINGS", TOKEN_TYPE_STRINGS);
 
-    enum_<PainPerdu::parser::Token::Type>("PainPerduTokenType");
+    //enum_<PainPerdu::parser::Token::Type>("PainPerduTokenType");
 
     class_<PainPerdu::parser::Token>("PainPerduToken")
         .function("get_type", &PainPerdu::parser::Token::get_type)
@@ -41,4 +46,5 @@ EMSCRIPTEN_BINDINGS(PainPerduParserModule) {
     
     register_vector<PainPerdu::parser::Token>("VectorToken");
     function("get_tokens", &get_tokens);
+    //function("token_type_to_string", &token_type_to_string);
 }

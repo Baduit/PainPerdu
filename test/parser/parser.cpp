@@ -69,10 +69,10 @@ TEST_CASE("token_basic")
 {
 	using namespace PainPerdu::parser;
 
-	std::string_view code = ">1 <1+255\t-1";
+	std::string_view code = ">1 <1+255\t-1][";
 	PainPerdu::Parser parser;
 	auto tokens = parser.get_tokens(code);
-	REQUIRE(tokens.size() == 8);
+	REQUIRE(tokens.size() == 10);
 	CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
 	CHECK(tokens[1] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 2, .length = 1});
 	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 4, .length = 1});
@@ -81,6 +81,8 @@ TEST_CASE("token_basic")
 	CHECK(tokens[5] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 7, .length = 3});
 	CHECK(tokens[6] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 11, .length = 1});
 	CHECK(tokens[7] == Token{.type = Token::Type::NUMBER,   .line = 1, .start_column = 12, .length = 1});
+	CHECK(tokens[8] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 13, .length = 1});
+	CHECK(tokens[9] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 14, .length = 1});
 }
 
 TEST_CASE("token_basic")
@@ -98,4 +100,100 @@ TEST_CASE("token_basic")
 	CHECK(tokens[1] == Token{.type = Token::Type::LABEL,    .line = 1, .start_column = 2, .length = 5});
 	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 3, .start_column = 1, .length = 1});
 	CHECK(tokens[3] == Token{.type = Token::Type::VARIABLE, .line = 3, .start_column = 2, .length = 3});
+}
+
+TEST_CASE("token_all_operator_one_by_one")
+{
+	using namespace PainPerdu::parser;
+	{
+		std::string_view code = ">1";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "<1";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "-1";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = ";";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 1);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "#lol";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = ".lol";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "@ref";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "*lol";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "&lol";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "?";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 1);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "!ref";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 2);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "]";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 1);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
+	{
+		std::string_view code = "[";
+		PainPerdu::Parser parser;
+		auto tokens = parser.get_tokens(code);
+		REQUIRE(tokens.size() == 1);
+		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
+	}
 }

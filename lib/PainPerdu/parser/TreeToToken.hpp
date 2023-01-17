@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 #include <tao/pegtl/contrib/parse_tree.hpp>
 
@@ -23,7 +24,7 @@ struct TreeToTokenState
     NextIdentifierType next_identifier_type;
 };
 
-inline Token::Type get_token_type(TreeToTokenState::NextIdentifierType next_identifier_type)
+inline std::string_view get_token_type(TreeToTokenState::NextIdentifierType next_identifier_type)
 {
     switch (next_identifier_type)
     {
@@ -71,7 +72,7 @@ DefineAction(operators::MoveRight, Token::Type::OPERATOR, TreeToTokenState::Next
 DefineAction(operators::MoveLeft, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
 DefineAction(operators::Increment, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
 DefineAction(operators::Decrement, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
-DefineAction(operators::ResetCase, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::NONE)
+DefineAction(ResetCase, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::NONE)
 DefineAction(operators::DefineReference, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
 DefineAction(operators::UndefineReference, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
 DefineAction(operators::MoveToReference, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
@@ -80,8 +81,8 @@ DefineAction(operators::Rewind, Token::Type::OPERATOR, TreeToTokenState::NextIde
 DefineAction(operators::IfCurrentValueDifferent, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
 DefineAction(operators::IfCursorIsAtReference, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
 DefineAction(operators::IfReferenceExists, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::REFERENCE)
-DefineAction(operators::GetChar, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::NONE)
-DefineAction(operators::PutChar, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::NONE)
+DefineAction(GetChar, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::NONE)
+DefineAction(PutChar, Token::Type::OPERATOR, TreeToTokenState::NextIdentifierType::NONE)
 
 DefineAction(Comment, Token::Type::COMMENT, TreeToTokenState::NextIdentifierType::NONE)
 DefineAction(ReadFile, Token::Type::STRING, TreeToTokenState::NextIdentifierType::NONE)
