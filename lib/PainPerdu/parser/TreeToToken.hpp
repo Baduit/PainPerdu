@@ -24,7 +24,7 @@ struct TreeToTokenState
     NextIdentifierType next_identifier_type;
 };
 
-inline std::string_view get_token_type(TreeToTokenState::NextIdentifierType next_identifier_type)
+inline Token::Type get_token_type(TreeToTokenState::NextIdentifierType next_identifier_type)
 {
     switch (next_identifier_type)
     {
