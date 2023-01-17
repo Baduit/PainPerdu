@@ -197,3 +197,25 @@ TEST_CASE("token_all_operator_one_by_one")
 		CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
 	}
 }
+
+TEST_CASE("get_defined_labels")
+{
+	using namespace PainPerdu::parser;
+	std::string_view code = ":lol #lol :toto#plop";
+	PainPerdu::Parser parser;
+	auto labels = parser.get_defined_labels(code);
+	REQUIRE(labels.size() == 2);
+	CHECK(labels[0] == "lol");
+	CHECK(labels[1] == "toto");
+}
+
+TEST_CASE("get_defined_references")
+{
+	using namespace PainPerdu::parser;
+	std::string_view code = ":lol #lol :toto#plop";
+	PainPerdu::Parser parser;
+	auto refs = parser.get_defined_references(code);
+	REQUIRE(refs.size() == 2);
+	CHECK(refs[0] == "lol");
+	CHECK(refs[1] == "plop");
+}
