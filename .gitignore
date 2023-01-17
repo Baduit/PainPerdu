@@ -33,6 +33,7 @@
 
 # Emscripten output
 website/generated
+vscode_extention/painperdu-bakery/generated
 
 # Build dirs
 build
