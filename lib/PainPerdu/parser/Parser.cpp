@@ -7,10 +7,7 @@
 #include <PainPerdu/parser/GetDefinedLabels.hpp>
 #include <PainPerdu/parser/GetDefinedReferences.hpp>
 
-namespace PainPerdu
-{
-
-namespace parser
+namespace PainPerdu::parser
 {
 
 template<typename Rule>
@@ -103,7 +100,5 @@ std::vector<std::string> Parser::get_defined_references(std::string_view input)
 	return references;
 }
 
-} // namespace parser
+} // namespace PainPerdu::parser
 
-
-} // namespace PainPerdu

@@ -3,77 +3,77 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  build_linux:
-    name: Build Linux
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    
-    - name: vcpkg init
-      run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
+	build_linux:
+		name: Build Linux
+		runs-on: ubuntu-latest
+		
+		steps:
+		- name: Checkout repository
+			uses: actions/checkout@v2
+		
+		- name: vcpkg init
+			run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
 
-    - name: Build project
-      env:
-        CC: gcc-10
-        CXX: g++-10
-      run: |
-        cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake .
-        cmake --build .
+		- name: Build project
+			env:
+				CC: gcc-10
+				CXX: g++-10
+			run: |
+				cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake .
+				cmake --build .
 
-    - name: Run tests
-      run: ctest
+		- name: Run tests
+			run: ctest
 
-  build_emscripten:
-    name: Build Emscripten
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+	build_emscripten:
+		name: Build Emscripten
+		runs-on: ubuntu-latest
+		
+		steps:
+		- name: Checkout repository
+			uses: actions/checkout@v2
 
-    - name: Install emsdk
-      run: |
-        git clone https://github.com/emscripten-core/emsdk.git
-        cd emsdk
-        ./emsdk install latest
-        ./emsdk activate latest
-        source ./emsdk_env.sh
-        cd ..
-    
-    - name: vcpkg init
-      run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
+		- name: Install emsdk
+			run: |
+				git clone https://github.com/emscripten-core/emsdk.git
+				cd emsdk
+				./emsdk install latest
+				./emsdk activate latest
+				source ./emsdk_env.sh
+				cd ..
+		
+		- name: vcpkg init
+			run: git clone https://github.com/microsoft/vcpkg && ./vcpkg/bootstrap-vcpkg.sh
 
-    - name: Build project
-      run: |
-        source ./emsdk/emsdk_env.sh
-        ls ./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
-        cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DEMSCRIPTEN=ON .
-        cmake --build .
+		- name: Build project
+			run: |
+				source ./emsdk/emsdk_env.sh
+				ls ./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
+				cmake -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=./emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DEMSCRIPTEN=ON .
+				cmake --build .
 
-    - name: Run tests
-      run: |
-        node --experimental-wasm-eh  ./test/parser/parser_test_test.js
-        node --experimental-wasm-eh  ./test/functional/functional_test_test.js
+		- name: Run tests
+			run: |
+				node --experimental-wasm-eh  ./test/parser/parser_test_test.js
+				node --experimental-wasm-eh  ./test/functional/functional_test_test.js
 
-  build_windows:
-    name: Build Windows
-    runs-on: windows-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    
-    - name: vcpkg init
-      run: |
-        git clone https://github.com/microsoft/vcpkg
-        ./vcpkg\bootstrap-vcpkg.bat
+	build_windows:
+		name: Build Windows
+		runs-on: windows-latest
+		
+		steps:
+		- name: Checkout repository
+			uses: actions/checkout@v2
+		
+		- name: vcpkg init
+			run: |
+				git clone https://github.com/microsoft/vcpkg
+				./vcpkg\bootstrap-vcpkg.bat
 
-    - name: Build
-      run: |
-        cmake -DCMAKE_TOOLCHAIN_FILE=D:/a/PainPerdu/PainPerdu/vcpkg/scripts/buildsystems/vcpkg.cmake .
-        cmake --build .
+		- name: Build
+			run: |
+				cmake -DCMAKE_TOOLCHAIN_FILE=D:/a/PainPerdu/PainPerdu/vcpkg/scripts/buildsystems/vcpkg.cmake .
+				cmake --build .
 
-    - name: Run tests
-      run: ctest
+		- name: Run tests
+			run: ctest

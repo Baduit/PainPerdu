@@ -19,9 +19,40 @@ class DocumentSemanticTokensProvider {
 		for (var i = 0; i < allTokens.size(); ++i) {
 			let token = allTokens.get(i);
 			builder.push(token.get_line() - 1, token.get_start_column() - 1, token.get_length(), token.get_type_index());
-			//console.log("Token:\n\tline: " + (token.get_line() - 1)+ "\n\tcolumn: " + (token.get_start_column() - 1) + "\n\tlength: " + token.get_length() + "\n\ttype: " + token.get_type() + "\n")
 		}
 		return builder.build();
+	}
+}
+
+class GoCompletionItemProviderLabels {
+	provideCompletionItems(document) {
+		const labels = bindings.get_defined_labels(document.getText());
+
+		let result = [];
+		for (var i = 0; i < labels.size(); ++i) {
+			let label = labels.get(i);
+			let completionItem = new vscode.CompletionItem();
+			completionItem.label = label;
+			completionItem.kind = vscode.CompletionItemKind.Function;
+			result.push(completionItem);
+		}
+		return result;
+	}
+}
+
+class GoCompletionItemProviderReference {
+	provideCompletionItems(document) {
+		const refs = bindings.get_defined_references(document.getText());
+
+		let result = [];
+		for (var i = 0; i < refs.size(); ++i) {
+			let ref = refs.get(i);
+			let completionItem = new vscode.CompletionItem();
+			completionItem.label = ref;
+			completionItem.kind = vscode.CompletionItemKind.Variable;
+			result.push(completionItem);
+		}
+		return result;
 	}
 }
 
@@ -29,11 +60,13 @@ class DocumentSemanticTokensProvider {
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	console.log('Congratulations, your extension "painperdurecipe" is now active!');
-	context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider({ language: 'painperdu' }, new DocumentSemanticTokensProvider(), legend));
+	const selector = { language: 'painperdu' };
+	context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider(selector, new DocumentSemanticTokensProvider(), legend));
+	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GoCompletionItemProviderLabels(), '.', '*', '&'));
+	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GoCompletionItemProviderReference(), '#', '@', '$', '>', '<', '+', '-', '?', '!'));
 }
 
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
 	activate,

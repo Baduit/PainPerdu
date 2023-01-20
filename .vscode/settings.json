@@ -119,5 +119,6 @@
 		"__tree": "cpp",
 		"__tuple": "cpp",
 		"string_view": "cpp"
-	}
+	},
+	"editor.insertSpaces": false
 }
