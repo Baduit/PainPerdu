@@ -23,4 +23,16 @@ class Interpreter
 		vm::VirtualMachine _vm;
 };
 
+// Alternative API
+struct PainPerduResult
+{
+	const auto& get_console_output() const { return console_output; }
+	const auto& get_stack() const { return stack; }
+
+	std::string console_output;
+	std::vector<uint8_t> stack;
+};
+
+PainPerduResult run_pain_perdu_code_no_input(const std::string& input);
+
 } // namespace PainPerdu

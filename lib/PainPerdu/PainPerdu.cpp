@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include <PainPerdu/PainPerdu.hpp>
 
 namespace PainPerdu
@@ -28,6 +30,28 @@ void Interpreter::disable_input()
 const std::vector<uint8_t>& Interpreter::get_stack() const
 {
 	return _vm.get_stack();
+}
+
+PainPerduResult run_pain_perdu_code_no_input(const std::string& input)
+{
+	PainPerduResult result;
+	try
+	{
+		std::stringstream out;
+		std::stringstream in;
+		PainPerdu::Interpreter interpreter(in, out);
+		interpreter.disable_input();
+
+		interpreter.compile_and_run(input);
+
+		result.console_output = out.str();
+		result.stack = interpreter.get_stack();
+	}
+	catch (std::exception& e)
+	{
+		result.console_output = std::string("Error : ") + e.what();
+	}
+	return result;
 }
 
 } // namespace PainPerdu

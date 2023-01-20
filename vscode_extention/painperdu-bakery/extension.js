@@ -60,6 +60,18 @@ class GoCompletionItemProviderReference {
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+	let PainPerduChannel = vscode.window.createOutputChannel("PainPerdu");
+
+	let bake_command = vscode.commands.registerCommand('PainPerdu.bake', () => {
+		const editor = vscode.window.activeTextEditor;
+		if (editor) {
+			let document = editor.document;
+			let output = bindings.run_pain_perdu_code(document.getText()).console_output();
+			PainPerduChannel.append(output);
+		}
+	});
+	context.subscriptions.push(bake_command);
+
 	const selector = { language: 'painperdu' };
 	context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider(selector, new DocumentSemanticTokensProvider(), legend));
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GoCompletionItemProviderLabels(), '.', '*', '&'));

@@ -3,7 +3,7 @@
 
 #include <emscripten/bind.h>
 
-#include <PainPerdu/parser/Parser.hpp>
+#include <PainPerdu/PainPerdu.hpp>
 
 using namespace emscripten;
 
@@ -35,4 +35,11 @@ EMSCRIPTEN_BINDINGS(PainPerduParserModule) {
 	function("get_tokens", &get_tokens);
 	function("get_defined_labels", &get_defined_labels);
 	function("get_defined_references", &get_defined_references);
+
+	function("run_pain_perdu_code", &PainPerdu::run_pain_perdu_code_no_input);
+
+	register_vector<uint8_t>("vector<uint8_t>");
+	class_<PainPerdu::PainPerduResult>("PainPerduResult")
+		.function("console_output", &PainPerdu::PainPerduResult::get_console_output)
+		.function("stack", &PainPerdu::PainPerduResult::get_stack);
 }
