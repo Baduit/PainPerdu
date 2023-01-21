@@ -1,6 +1,5 @@
 {
 	"files.associations": {
-		"*.pain": "log",
 		"functional": "cpp",
 		"type_traits": "cpp",
 		"xlocnum": "cpp",
