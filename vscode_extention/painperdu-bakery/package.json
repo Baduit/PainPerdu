@@ -3,12 +3,15 @@
 	"displayName": "PainPerdu Bakery",
 	"description": "Color highlighting and autocomplete for PainPerdu language",
 	"version": "0.0.1",
+	"repository": "https://github.com/Baduit/PainPerdu",
+	"publisher": "Baduit",
 	"engines": {
 		"vscode": "^1.74.0"
 	},
 	"categories": [
 		"Programming Languages"
 	],
+	"activationEvents": [],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
