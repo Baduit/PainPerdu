@@ -31,7 +31,11 @@
 				"extensions": [
 					".pain"
 				],
-				"configuration": "./language-configuration.json"
+				"configuration": "./language-configuration.json",
+				"icon": {
+					"dark": "./assets/file_icon.png",
+					"light": "./assets/file_icon.png"
+				}
 			}
 		]
 	},
