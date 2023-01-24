@@ -3,7 +3,7 @@
 	"displayName": "PainPerdu Bakery",
 	"description": "Color highlighting and autocomplete for PainPerdu language",
 	"icon": "assets/DALLE_2023-01-21_23.58.17_-_Pain_perdu_waifu_minimalist_digital_art.png",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Baduit/PainPerdu"
