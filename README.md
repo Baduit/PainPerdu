@@ -158,6 +158,9 @@ You can note that there is a difference between the online version and the local
 
 But there is an exclusive  feature! There is a canvas. The 1st pixel uses the value of 1st case of the stack for the color red, the 2nd for its color green and the 3rd for the blue and so on.
 
+## VSCode extension
+There is a VSCode extension that provides auto-completion and semantic highlighting. You can find it on the VSCode market place here: https://marketplace.visualstudio.com/items?itemName=Baduit.painperdu-bakery
+
 ## Interpreter
 ### Build instructions
 It requires a recent version of cmake, a compiler supporting C++20 and vcpkg for depencies.
