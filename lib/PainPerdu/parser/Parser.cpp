@@ -2,7 +2,7 @@
 
 #include <PainPerdu/parser/Parser.hpp>
 #include <PainPerdu/parser/TreeToDefVisitor.hpp>
-#include <PainPerdu/parser/TreeToToken.hpp>
+#include <PainPerdu/parser/ToToken.hpp>
 #include <PainPerdu/parser/Grammar.hpp>
 #include <PainPerdu/parser/GetDefinedLabels.hpp>
 #include <PainPerdu/parser/GetDefinedReferences.hpp>
@@ -70,10 +70,10 @@ Definitions Parser::operator()(std::string_view input)
 
 std::vector<Token> Parser::get_tokens(std::string_view input)
 {
-	TreeToTokenState token_state;
+	ToTokenState token_state;
 
 	pegtl::memory_input mem_input(input.data(), input.size(), "");
-	pegtl::parse<Grammar, TreeToTokenAction>(mem_input, token_state);
+	pegtl::parse<Grammar, ToTokenAction>(mem_input, token_state);
 
 	return token_state.tokens;
 }

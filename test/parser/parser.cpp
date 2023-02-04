@@ -99,7 +99,7 @@ TEST_CASE("token_basic")
 	CHECK(tokens[0] == Token{.type = Token::Type::OPERATOR, .line = 1, .start_column = 1, .length = 1});
 	CHECK(tokens[1] == Token{.type = Token::Type::LABEL,    .line = 1, .start_column = 2, .length = 5});
 	CHECK(tokens[2] == Token{.type = Token::Type::OPERATOR, .line = 3, .start_column = 1, .length = 1});
-	CHECK(tokens[3] == Token{.type = Token::Type::VARIABLE, .line = 3, .start_column = 2, .length = 3});
+	CHECK(tokens[3] == Token{.type = Token::Type::REFERENCE, .line = 3, .start_column = 2, .length = 3});
 }
 
 TEST_CASE("token_all_operator_one_by_one")

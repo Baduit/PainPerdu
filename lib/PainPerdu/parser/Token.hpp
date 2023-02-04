@@ -9,22 +9,9 @@ namespace PainPerdu::parser
 
 struct Token
 {
-	// Enum totally bugged so I'm making a struct with constante to simulate it
-	// And also string type because this will be used in javascript as string values
-	/* struct Type
-	{
-		// The variable name correspond to its PainPerdu meaning
-		// The variable value correspond to how I want to color it in vscode
-		inline static std::string VARIABLE = "variable";
-		inline static std::string LABEL = "function";
-		inline static std::string COMMENT = "comment";
-		inline static std::string STRING = "string";
-		inline static std::string NUMBER = "number";
-		inline static std::string OPERATOR = "operator";
-	}; */
 	enum class Type
 	{
-		VARIABLE,
+		REFERENCE,
 		LABEL,
 		COMMENT,
 		STRING,
