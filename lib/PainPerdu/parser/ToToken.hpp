@@ -13,8 +13,8 @@ struct ToTokenState
 	enum NextIdentifierType
 	{
 		NONE, // If there is an identifier with NONE, this is a bug
-		LABEL, // Equivalent of Token::Type::LABEL
-		REFERENCE // Equivalent of Token::Type::REFERENCE
+		LABEL,
+		REFERENCE
 	};
 
 	std::vector<Token> tokens;
@@ -33,8 +33,6 @@ inline Token::Type get_token_type(ToTokenState::NextIdentifierType next_identifi
 		{
 			return Token::Type::REFERENCE;
 		}
-		// Weird, even when the switch was exhaustive (there was also the NONE case)
-		// MSVC complained about not all path having a return value (warning C4715)
 		default:
 		{
 			throw std::runtime_error("Someone did a shitty code trololol");
