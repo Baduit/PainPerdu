@@ -165,20 +165,6 @@ There is a VSCode extension that provides auto-completion and semantic highlight
 ### Build instructions
 It requires a recent version of cmake, a compiler supporting C++20 and vcpkg for depencies.
 
-It uses:
-- [Rang](https://github.com/Baduit/PainPerdu/tree/master/lib/external/Rang) a simple library to have color for my (very basics) logs
-- [PEGTL](https://github.com/taocpp/PEGTL) a parser library
-- [MagicEnum](https://github.com/Neargye/magic_enum) cool library allowing to have reflection with enums
-- [nameof](https://github.com/Neargye/nameof) usefull library
-
-
-The web version also uses:
-- [nlohmann json](https://github.com/nlohmann/json) do I really need to present it ?
-- [cpp-httplib](https://github.com/yhirose/cpp-httplib) a very simple http library in 1 header or 1 header and 1 source file.
-
-For the tests :
-- [ut](https://github.com/boost-ext/ut) a single header macro free unit test framework (only library directly included in the sources)
-
 ### Usage
 The name of the interpreter is 'ppb' (Pain Perdu Baker).
 
